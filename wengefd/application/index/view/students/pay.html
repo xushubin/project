@@ -1,0 +1,73 @@
+{include file="public/header" /}
+
+<div class="payb">
+    <div><img src="__PUBLIC__images/01.jpg" > 老师：{$msg.teid}</div>
+    <div class="paym">
+        <div>
+            <table width="100%">
+                <thead style="background: #f1eff0">
+                <tr>
+                    <td>学生</td>
+                    <td>辅导类型</td>
+                    <td>单价（$）</td>
+                    <td>数量</td>
+                    <td>优惠名称</td>
+                    <td>优惠金额（$）</td>
+                    <td>附加费名称</td>
+                    <td>附加费金额（$）</td>
+                    <td>总价（$）</td>
+                    <td>修改次数</td>
+                </tr>
+                </thead>
+                <tbody style="background: white;    border-bottom: 2px solid #f5f5f5;">
+                    <tr>
+                         <td>{$msg.sid}</td>
+                         <td>{$msg.tutoty}</td>
+                         <td>{$pay.price}</td>
+                         <td>{$pay.num}</td>
+                         <td>{$pay.discomsg}</td>
+                         <td>{$pay.discmoney}</td>
+                         <td>{$pay.addmsg}</td>
+                         <td>{$pay.addmoney}</td>
+                         <td>{$pay.total}</td>
+                         <td>{$msg.editnum}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="background: white;    padding: 2%;">
+                    请选择付款方式：
+                    <img class="p" id="img1" onclick="pay(1)" src="__PUBLIC__images/02.jpg" />
+                    <img class="p" id="img2" onclick="pay(2)" src="__PUBLIC__images/03.jpg" />
+                </select>
+            </div>
+            <div class="paysu">需支付：<b style="color: #f26a40;">{$pay.total}$</b>
+                <input id="hidd" type="hidden">
+            <a id="paym" href="{:url('payment','id='.$pay['id'].'&tid='.$msg['id'])}" onclick="return check()"><button class="paymen" type="button">立即支付</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="padding-bottom: 10%"></div>
+
+
+<script>
+    function pay(p){
+        id = "#img"+p;
+        $(".p").css("border-color","#dadada");
+        $(id).css("border-color","#f26a40");
+        href = $("#paym").attr('href');
+        $("#hidd").val(p);
+        arr = href.split('?');
+        h = arr[0]+"?pay="+p;
+        $("#paym").attr('href',h);
+    }
+
+    function check() {
+        p = $("#hidd").val();
+        if(p == ''){
+            alert('请选择付款方式！');
+            return false;
+        }
+    }
+</script>
+{include file="public/footer" /}

@@ -1,0 +1,53 @@
+{include file="public/header" /}
+<div id="page-wrapper" class="user-management">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    学员管理 <small>学员列表</small>
+                </h1>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 bill-order">
+                <table class="table table-bordered ">
+                    <thead>
+                    <tr>
+                        <td>用户名</td>
+                        <td>头像</td>
+                        <td>邮箱</td>
+                        <td>姓名</td>
+                        <td>院校/领域</td>
+                        <td>联系电话</td>
+                        <td>地址</td>
+                        <td>课程领域</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $msg as $v}
+                    <tr>
+                        <td>{$v.name}</td>
+                        <td><img width="100px" src="__UPLOAD__/{$v.avatar}" onerror="this.style.display='none'"></td>
+                        <td>{$v.email}</td>
+                        <td>{$v.username}</td>
+                        <td>{$v.college}</td>
+                        <td>{$v.tel}</td>
+                        <td>{$v.address}</td>
+                        <td>{$v.course}</td>
+                    </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-12" style="text-align:center">
+                {$page}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{include file="public/footer" /}

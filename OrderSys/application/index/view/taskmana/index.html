@@ -1,0 +1,215 @@
+﻿{include file="public/header" /}
+
+<div id="page-wrapper" class="create-order">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    任务管理 <small>任务看板</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-tasks"></i> 任务看板
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <form class="form-horizontal" action="{:url('search')}" method="post" id="">
+            <div class="form-group">
+                <label for="taskid" class="col-xs-1 control-label">任务编号</label>
+                <div class="col-xs-2">
+                <input name="id" id="id" type="text" class="form-control" placeholder="请输入六位任务编号">
+                </div>
+                <button class="btn btn-primary col-xs-1" type="submit" id="idbtn">查询</button>
+                <div class="col-xs-1"></div>
+                <a href="{:url('check')}"><button class="btn btn-primary col-xs-1" type="button" id="">查看抽检列表</button></a>
+
+            </div>
+        </form>
+
+        <form class="form-horizontal" action="{:url('filter')}" method="post" id="filter">
+            <div class="form-group">
+                <label for="taskid" class="col-xs-1 control-label">任务时间</label>
+                <div class="col-xs-2">
+                    <select name="time" id="time" class="form-control">
+                        <option {eq name="time" value="10"} selected {/eq} value="10">全部时间</option>
+                        <option {eq name="time" value="1"} selected {/eq} value="1">12小时内</option>
+                        <option {eq name="time" value="2"} selected {/eq} value="2">24小时内</option>
+                        <option {eq name="time" value="3"} selected {/eq} value="3">48小时内</option>
+                        <option {eq name="time" value="4"} selected {/eq} value="4">七天内</option>
+                        <option {eq name="time" value="5"} selected {/eq} value="5">30天内</option>
+                        <option {eq name="time" value="6"} selected {/eq} value="6">已过期</option>
+                    </select>
+                </div>
+                <label for="taskid" class="col-xs-1 control-label">任务类别</label>
+                <div class="col-xs-2">
+                    <select name="taskid" id="taskid" class="form-control">
+                        <option {eq name="taskid" value="10"} selected {/eq} value="10">全部类别任务</option>
+                        <option {eq name="taskid" value="2"} selected {/eq} value="2">P类任务</option>
+                        <option {eq name="taskid" value="4"} selected {/eq} value="4">H类任务</option>
+                        <option {eq name="taskid" value="1"} selected {/eq} value="1">C类任务</option>
+                        <option {eq name="taskid" value="3"} selected {/eq} value="3">E类任务</option>
+                    </select>
+                </div>
+                <label for="taskstatus" class="col-xs-1 control-label">任务状态</label>
+                <div class="col-xs-2">
+                    <select name="taskstatus" id="taskstatus" class="form-control">
+                        <option {eq name="taskstatus" value="10"} selected {/eq} value="10">全部任务</option>
+                        <option {eq name="taskstatus" value="1"} selected {/eq} value="1">未分配</option>
+                        <option {eq name="taskstatus" value="2"} selected {/eq} value="2">已分配</option>
+                        <option {eq name="taskstatus" value="4"} selected {/eq} value="4">已完成</option>
+                        <option {eq name="taskstatus" value="5"} selected {/eq} value="5">修改</option>
+                        <option {eq name="taskstatus" value="6"} selected {/eq} value="6">争议</option>
+                        <option {eq name="taskstatus" value="-1"} selected {/eq} value="-1">非已完成</option>
+                    </select>
+                </div>
+                <div class="col-xs-1">
+                    <button class="btn btn-primary" type="button" id="btn">查询</button>
+                </div>
+            </div>
+
+        </form>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered task-table table-hover">
+                    <thead>
+                    <tr>
+                        <!--{eq name='ord' value='0'}
+                        <td><a href="{:url('filter','time='.$time.'&taskid='.$taskid.'&taskstatus='.$taskstatus.'&ord=1')}">任务编号</a></td>
+                        {else/}
+                            {eq name='ord' value='1'}
+                            <td><a href="{:url('filter','time='.$time.'&taskid='.$taskid.'&taskstatus='.$taskstatus.'&ord=2')}">任务编号<i class="fa fa-sort-down" style="margin-left: 4px"></i></a></td>
+                            {else/}
+                            <td><a href="{:url('filter','time='.$time.'&taskid='.$taskid.'&taskstatus='.$taskstatus.'&ord=1')}">任务编号<i class="fa fa-sort-up" style="margin-left: 4px"></i></a></td>
+                            {/eq}
+                        {/eq}-->
+                        <td>任务编号</td>
+                        <td>用户编号</td>
+                        <td>任务标题</td>
+                        <!--{eq name='jie' value='0'}
+                        <td><a href="{:url('filter','time='.$time.'&taskid='.$taskid.'&taskstatus='.$taskstatus.'&jie=1')}">距离截止时间小时</a></td>
+                        {else/}
+                            {eq name='jie' value='1'}
+                                <td><a href="{:url('filter','time='.$time.'&taskid='.$taskid.'&taskstatus='.$taskstatus.'&jie=2')}">距离截止时间小时<i class="fa fa-sort-down" style="margin-left: 4px"></i></a></td>
+                            {else/}
+                                <td><a href="{:url('filter','time='.$time.'&taskid='.$taskid.'&taskstatus='.$taskstatus.'&jie=1')}">距离截止时间小时<i class="fa fa-sort-up" style="margin-left: 4px"></i></a></td>
+                            {/eq}
+                        {/eq}-->
+                        <td>距离截止时间小时</td>
+                        <td>截止时间</td>
+                        <td>销售备注</td>
+                        <td>任务状态</td>
+                        <td>任务许可</td>
+                        <td style="width:10%">TA</td>
+                        <td style="width:10%">任务备注</td>
+                        <td>操作</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                        {foreach name="msg" item="p"}
+                        <tr>
+                        <form action="{:url('add')}" method="post">
+                            <td><a href="{:url('ordetal','id='.$p.id)}">{$p.orderid}</a></td>
+                            <td>{$p.userid}</td>
+                            <td>{$p.tasktitle}</td>
+                            <td {eq name="p.isred" value="1"} style="color:red" {/eq}>{$p.time}</td>
+                            <td {eq name="p.isred" value="1"} style="color:red" {/eq}>{$p.bj}</td>
+                            <td>{$p.remark}</td>
+                            <td>
+                                <select name="taskstatus" class="form-control">
+                                    <option {eq name="p.taskstatus" value="1"} selected {/eq} value="1">未分配</option>
+                                    <option {eq name="p.taskstatus" value="2"} selected {/eq} value="2">已分配</option>
+                                    {neq name="p.paystatus" value="逾期未支付"}
+                                    <option {eq name="p.taskstatus" value="4"} selected {/eq} value="4">已完成</option>
+                                    {/neq}
+                                    <option {eq name="p.taskstatus" value="5"} selected {/eq} value="5">修改</option>
+                                    <option {eq name="p.taskstatus" value="6"} selected {/eq} value="6">争议</option>
+                                </select>
+                            </td>
+                            <td><span>{$p.misslic}</span></td>
+                            <td><span id="ta{$p.id}">{$p.ta}</span></td>
+                            <td><span id="taskmark{$p.id}">{$p.taskmark}</span><i class="fa fa-edit tm" data-title="任务备注" data-tm="{$p.id}" data-toggle="modal" data-target="#myModal3"></i></td>
+                            <td>
+                                <input name="id" value="{$p.id}" type="hidden">
+                                <input name="taskid" value="{$p.taskid}" type="hidden">
+                                <input name="taskmark" id="taskremark{$p.id}" value="" type="hidden">
+                                {neq name="Think.session.class" value="4"}
+                                <button type="submit" class="btn btn-primary">确定</button>
+                                {/neq}
+                            </td>
+                        </form>
+                        </tr>
+                        {/foreach}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12" style="text-align:center">
+                {$page}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 模态框 -->
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="myModal3">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel3">任务备注</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" id="tm" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="tid" value="">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="tmsub" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+
+        $(".tm").click(function(){
+            var index=$(this).attr('data-tm');
+            $("#tid").val(index);
+        });
+        $("#tmsub").click(function(){
+            ta = $("#tm").val();
+            pid = $("#tid").val();
+            $("#tm").val('');
+            $("#taskmark"+pid).text(ta);
+            $("#taskremark"+pid).val(ta);
+            $("#myModal3").modal('hide');
+        });
+
+        $("#btn").click(function(){
+            or = $("#taskid").val();
+            pay = $("#taskstatus").val();
+            time = $("#time").val();
+
+            if(or == 0 && pay == 0 && time == 0){
+                alert('您必须选择一项进行筛选！');
+                return false;
+            }else{
+                $("#filter").attr('action','/index.php/index/taskmana/filter/time/'+time+'/taskid/'+or+'/taskstatus/'+pay+'.html');
+                console.log($("#filter").attr('action'));
+                $("#filter").submit();
+            }
+        });
+    })
+</script>
+<!-- 模态框 end-->
+
+
+{include file="public/footer" /}

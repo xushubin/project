@@ -1,0 +1,56 @@
+{include file="public/header" /}
+<div id="page-wrapper" class="user-management">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    任务管理 <small>绩效管理</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-user"></i> 绩效管理
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <ul id="myTabs" class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="{:url('fullper')}" >全职管理</a></li>
+            <li role="presentation" class=""><a href="{:url('partper')}" >兼职管理</a></li>
+        </ul>
+        <div class="row">
+            <div class="col-lg-12 bill-order">
+                <table class="table table-bordered task-table table-hover">
+                    <thead>
+                    <tr>
+                        <td>TA姓名</td>
+                        <td>上月绩点</td>
+                        <td>标准绩点</td>
+                        <td>C类任务绩点</td>
+                        <td>非C类绩点</td>
+                        <td>本月当前总绩点</td>
+                        <td>绩点差额</td>
+                        <td>剩余天数</td>
+                        <td>备注</td>
+                    </tr>
+                    </thead>
+                    {foreach $msg as $v}
+                    <tr>
+                        <td><a href="{:url('tadel','id='.$v['id'])}">{$v.name}</a></td>
+                        <td>{$v.lastji|two}</td>
+                        <td>{$biao.lastid}</td>
+                        <td>{$v.cpop|two}</td>
+                        <td>{$v.otpop|two}</td>
+                        <td>{$v.monji|two}</td>
+                        <td>{$v.cha|two}</td>
+                        <td>{$biao.day}</td>
+                        <td></td>
+                    </tr>
+                    {/foreach}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="public/footer" /}

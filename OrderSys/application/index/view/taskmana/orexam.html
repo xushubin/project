@@ -1,0 +1,156 @@
+{include file="public/header" /}
+<div id="page-wrapper" class="user-management">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    任务管理 <small>{$msg.orderid}审核状态情</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-user"></i> {$msg.orderid}审核状态
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <ul id="myTabs" class="nav nav-tabs" role="tablist">
+            <li role="presentation" class=""><a href="{:url('ordetal','id='.$msg['id'])}" >任务详情</a></li>
+            <li role="presentation" class="active"><a href="{:url('orexam','id='.$msg['id'])}" >审核状态</a></li>
+            <li role="presentation" class=""><a href="{:url('orlog','id='.$msg['id'])}" >任务日志</a></li>
+        </ul>
+        <div class="row">
+            <div class="col-lg-12 bill-order">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <td width="20%">距截止时间</td>
+                        <td width="20%">{$msg.time}</td>
+                        <td width="20%">抽检状态</td>
+                        <td>
+                            {eq name="msg.check" value="0"}
+                                {eq name="Think.session.class" value="4"}
+                                    暂未知
+                                {else/}
+                                    <a href="{:url('casua','check=1&id='.$msg['id'])}"><button class="tabtn">抽检</button></a>
+                                    <a href="{:url('casua','check=2&id='.$msg['id'])}"><button class="tabtn">不抽检</button></a>
+                                {/eq}
+                            {else/}
+                                {$msg.check|ch}
+                            {/eq}
+                        </td>
+                    </tr>
+                    {eq name="ch" value="1"}
+                    {foreach $check as $v}
+                    <tr>
+                        <td width="20%">提交时间</td>
+                        <td>{$v.time|date="Y-m-d H:i:s",###}</td>
+                        <td width="20%">审核状态</td>
+                        <td>{$v.chstatus|chst} {$v.check|chec}</td>
+                    </tr>
+                    <tr>
+                        <td width="20%">查看凭证</td>
+                        <td><a target="_blank" href="UPLOADS/{$v.voucher}">{$v.voucher}</a></td>
+                        <td width="20%">查看文件1</td>
+                        <td><a target="_blank"  href="UPLOADS/{$v.chfile1}">{$v.chfile1}</a></td>
+                    </tr>
+                    <tr>
+                        <td width="20%">查看文件2</td>
+                        <td><a target="_blank"  href="UPLOADS/{$v.chfile2}">{$v.chfile2}</a></td>
+                        <td width="20%">查看文件3</td>
+                        <td><a target="_blank"  href="UPLOADS/{$v.chfile3}">{$v.chfile3}</a></td>
+                    </tr>
+                    <tr>
+                        <td width="20%">审核分数</td>
+                        <td width="20%">{$v.chscore}</td>
+                        <td width="20%">审核备注</td>
+                        <td>{$v.remark}</td>
+                    </tr>
+                    <tr><td colspan="4">&nbsp;</td></tr>
+                    {/foreach}
+                    {/eq}
+                    {eq name="flag" value="1"}
+                    <form action="{:url('orcheck')}" id="form" method="post">
+                        <tr>
+                            <td width="20%">提交时间</td>
+                            <td>{$xu.time|date="Y-m-d H:i:s",###}</td>
+                            <td width="20%">查看凭证</td>
+                            <td><a target="_blank" href="UPLOADS/{$xu.voucher}">{$xu.voucher}</a></td>
+                        </tr>
+                        <tr>
+                            <td width="20%">查看文件1</td>
+                            <td><a target="_blank"  href="UPLOADS/{$xu.chfile1}">{$xu.chfile1}</a></td>
+                            <td width="20%">查看文件2</td>
+                            <td><a target="_blank"  href="UPLOADS/{$xu.chfile2}">{$xu.chfile2}</a></td>
+                        </tr>
+                        {neq name="Think.session.class" value="4"}
+                        {eq name="msg.check" value="1"}
+                        <tr>
+                            <td width="20%">查看文件3</td>
+                            <td><a target="_blank"  href="UPLOADS/{$xu.chfile3}">{$xu.chfile3}</a></td>
+                            <td width="20%">审核分数</td>
+                            <td width="20%"><input type="text" id="score" name="chscore" class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <td width="20%">审核状态</td>
+                            <td><select class="form-control" name="check">
+                                <option value="1">通过</option>
+                                <option value="2">不通过</option>
+                            </select></td>
+                            <td width="20%">审核备注</td>
+                            <td width="20%"><input type="text" name="remark" class="form-control"><input type="hidden" name="orid" value="{$xu.orid}"</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><input type="button" id="chbtn" class="tabtn" value="提交"><input type="hidden" name="id" value="{$xu.id}"></td>
+                        </tr>
+                        <script>
+                            $("#chbtn").click(function () {
+                                sc = $("#score").val();
+                                if(sc < 0 || sc > 100 || sc == ''){
+                                    alert('请填写正确的分数');
+                                    $("#score").focus();
+                                }else{
+                                    $("#form").submit();
+                                }
+                            })
+                        </script>
+                        {else/}
+                        <tr>
+                            <td width="20%">查看文件3</td>
+                            <td colspan="3"><a target="_blank"  href="UPLOADS/{$xu.chfile3}">{$xu.chfile3}</a></td>
+                        </tr>
+
+                        {/eq}
+                        {/eq}
+                    </form>
+
+                    {/neq}
+
+
+                        {eq name="fl" value="0"}
+                        <form action="{:url('upcheck')}" method="post" enctype="multipart/form-data">
+                        <tr>
+                            <td width="20%">上传凭证</td>
+                            <td><input type="file" name="voucher" class="form-control"></td>
+                            <td width="20%">上传资料1</td>
+                            <td><input type="file" name="chfile1" class="form-control"></td>
+                        </tr>
+
+                        <tr>
+                            <td width="20%">上传资料2</td>
+                            <td><input type="file" name="chfile2" class="form-control"></td>
+                            <td width="20%">上传资料3</td>
+                            <td><input type="file" name="chfile3" class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><input type="submit" class="tabtn"><input type="hidden" name="orid" value="{$msg.id}"></td>
+                        </tr>
+                        </form>
+                        {/eq}
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="public/footer" /}

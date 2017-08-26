@@ -1,0 +1,98 @@
+{include file="public/header" /}
+        <div id="page-wrapper" class="choicetask">
+            <div class="container-fluid">
+                <!-- 页面头部 -->
+                <form action="{:url('createtask')}" method="post" id="choicetask">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">
+                            创建订单 <small>选择任务类别</small>
+                        </h1>
+                            <ol class="breadcrumb">
+                                <li class="active">
+                                    <i class="fa fa-user"></i> 创建订单
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="row create-user">
+                        <div class="col-lg-12 clearfix">
+                            <a href="{:url('usermana/createuser',$mm)}">
+                            <button type="button" class="btn btn-primary pull-right">创建新用户<i class="fa fa-plus-circle"></i></button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row choicetask">
+                        {foreach name="msg" item="p"}
+                        <div class="col-lg-12">
+                            <div class="alert alert-info alert-dismissable" onclick="sethid({$p.userid})">
+                                <button type="button" id="close{$p.userid}" class="close" ><i class="fa fa-check-circle"></i></button>
+                                <i class="fa fa-info-circle"></i>查询到有用户编号<strong>{$p.userid}</strong>
+                            </div>
+                        </div>
+                        {/foreach}
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-lg-offset-3">
+                            <div class="form-group">
+                                <label for="taskid">选择任务类别</label>
+                                <select id="taskid" name="taskid" class="form-control">
+                                    <option value="">请选择</option>
+                                    <option value="5">会员充值</option>
+                                    <option value="2">paper</option>
+                                    <option value="4">homework</option>
+                                    <option value="3">exam</option>
+                                    <option value="1">整课</option>
+                                    <option value="5">监考</option>
+                                    <option value="5">书本</option>
+                                    <option value="5">补款</option>
+                                </select>
+                            </div>
+                            <input type="hidden" name="userid" id="userid" value="" >
+                            <input type="hidden" name="uid" value="{$userid}" >
+                            <input type="hidden" name="qqid"  value="{$qqid}" >
+                            <input type="hidden" name="wechatid" value="{$wechatid}" >
+                            <button type="submit" class="btn btn-primary pull-right">确定</button>
+                        </div>
+                    </div>
+                </form>    
+            </div>
+        </div>
+<script>
+function sethid(obj) {
+    $(".close").removeClass("active");
+    $("#close"+obj).addClass("active");
+    $("#userid").val(obj);
+    $("#choicetask").data('bootstrapValidator').resetForm();
+}
+$(function(){
+    $(function(){
+
+        $('#choicetask')
+        .bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                taskid:{
+                    validators: {
+                        notEmpty: {
+                            message: '任务类别不能为空'
+                        }
+                    }
+                }
+            }
+        }).on('success.form.bv',function(event){
+            if($("#userid").val()==""){
+                alert("用户编号不能为空");
+                event.preventDefault();
+            }
+        })
+    })
+})
+</script>
+
+{include file="public/footer" /}

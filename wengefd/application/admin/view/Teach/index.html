@@ -1,0 +1,63 @@
+{include file="public/header" /}
+<div id="page-wrapper" class="user-management">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    老师管理 <small>老师列表</small>
+                </h1>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 bill-order">
+                <table class="table table-bordered ">
+                    <thead>
+                    <tr>
+                        <td>用户名</td>
+                        <td>邮箱</td>
+                        <td>微信号</td>
+                        <td>擅长科目/领域</td>
+                        <td>可接受的修改次数</td>
+                        <td>收款账户</td>
+                        <td>审核状态</td>
+                        <td>操作</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $msg as $v}
+                    <tr>
+                        <td>{$v.name}</td>
+                        <td>{$v.email}</td>
+                        <td>{$v.wechat}</td>
+                        <td>{$v.course|cou}</td>
+                        <td>{$v.modifynum}</td>
+                        <td>{$v.payaccout}</td>
+                        {eq name="v.is_ok" value="0"}
+                        <td>未审核</td>
+                        {else/}
+                            {eq name="v.is_ok" value="1"}
+                                <td>审核通过</td>
+                            {else/}
+                                <td>审核未通过</td>
+                            {/eq}
+                        {/eq}
+                        <td>
+                        <a href="detail?id={$v.id}"><button class="btn btn-primary">查看详情</button></a>
+                    </td>
+                    </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-12" style="text-align:center">
+                {$page}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{include file="public/footer" /}

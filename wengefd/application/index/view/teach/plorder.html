@@ -1,0 +1,150 @@
+{include file="public/header" /}
+
+<div class="register-content" >
+    <div class="register-wrap">
+        <div class="register-title">确认订单</div>
+        <form action="{:url('payment')}" method="post" id="form">
+        <div class="user">
+            <p class="input-wrap">
+                <span class="red-star">*</span>
+                <label>
+                    <span class="fa fa-dollar icon"></span><span class="rel">单价：</span>
+                    <input type="text" name="price" id="price" readonly class="inpeeut" style="width:324px" value="{$teav.price}">
+
+                </label>
+            </p>
+        </div>
+        <div class="email">
+            <p class="input-wrap">
+                <span class="red-star">*</span>
+                <label>
+                    <span class="fa fa-bar-chart icon"></span>
+                </label>
+                    <select name="num" id="num" onchange="calcu()" class="selen">
+                        <option value="0">请选择数量</option>
+                        {for start="0.5" end="100.5" step="0.5"}
+                        <option>{$i}</option>
+                        {/for}
+                    </select>
+            </p>
+        </div>
+        <div class="password">
+            <p class="input-wrap">
+                <span class="red-star">&nbsp;&nbsp;</span>
+                <label>
+                    <span class="fa fa-file-text-o icon"></span>
+                    <input type="text" name="discomsg" id="pass" class="inpeeut" placeholder="请输入优惠名称">
+                </label>
+            </p>
+        </div>
+        <div class="repassword">
+            <p class="input-wrap">
+                <span class="red-star">&nbsp;&nbsp;</span>
+                <label>
+                    <span class="fa fa-money icon"></span>
+                    <input type="text" name="discmoney" id="discmoney" class="inpeeut" onblur="calcu()" placeholder="请确认优惠金额">
+                </label>
+            </p>
+        </div>
+
+            <div class="password">
+                <p class="input-wrap">
+                    <span class="red-star">&nbsp;&nbsp;</span>
+                    <label>
+                        <span class="fa fa-file-text-o icon"></span>
+                        <input type="text" name="addmsg" class="inpeeut" placeholder="请输入附加费名称">
+                    </label>
+                </p>
+            </div>
+            <div class="repassword">
+                <p class="input-wrap">
+                    <span class="red-star">&nbsp;&nbsp;</span>
+                    <label>
+                        <span class="fa fa-money icon"></span>
+                        <input type="text" name="addmoney" id="addmoney" class="inpeeut" onblur="calcu()" placeholder="请确认附加费金额">
+                    </label>
+                </p>
+            </div>
+
+            <div class="password">
+                <p class="input-wrap">
+                    <span class="red-star">*</span>
+                    <label>
+                        <span class="fa fa-dollar icon"></span><span class="rel">计算总价：</span>
+                        <input type="text" name="calctotal" readonly style="width: 296px" id="calctotal" class="inpeeut" placeholder="请选择数量">
+                    </label>
+                </p>
+            </div>
+
+            <div class="repassword">
+                <p class="input-wrap">
+                    <span class="red-star">*</span>
+                    <label>
+                        <span class="fa fa-money icon"></span>
+                        <input type="text" name="total" class="inpeeut" id="total"  value="" placeholder="请输入总价">
+                    </label>
+                </p>
+            </div>
+
+            <div class="repassword">
+                <p class="input-wrap">
+                    <span class="red-star">*</span>
+                    <label>
+                        <span class="fa fa-money icon"></span><span class="rel">修改次数：</span>
+                        <input type="text" name="editnum" id="editnum" class="inpeeut" style="width: 296px" value="{$col}" >
+                        <input id="modinum" type="hidden" value="{$col}">
+                    </label>
+                </p>
+            </div>
+
+        <div>
+            <div id="err"></div>
+            <input class="submit-button tijiao" id="subbtn" type="button" value="确认订单" />
+            <input name="tid" type="hidden" value="{$id}">
+        </div>
+        </form>
+        <p class="exit-account"></p>
+    </div>
+</div>
+<script>
+    function calcu(){
+        num = $("#num").val();
+        price = $("#price").val();
+        addmoney = $("#addmoney").val();
+        discmoney = $("#discmoney").val();
+            if(num == 0){
+                $("#calctotal").val("请选择数量");
+            }else{
+                val = num*price-Number(discmoney)+Number(addmoney);
+                console.log(val);
+                $("#calctotal").val(val);
+            }
+    }
+
+    $(function(){
+
+        $("#subbtn").click(function () {
+
+            num = $("#num").val();
+            total = $("#total").val();
+            editnum = $("#editnum").val();
+            modinum = $("#modinum").val();
+            if(num == 0){
+                $("#err").text('请选择数量');
+                return false;
+            }
+            if(total == ''){
+                $("#err").text('请输入总价');
+                return false;
+            }
+            if(editnum < modinum){
+                $("#err").text('不能低于承诺的修改次数');
+                return false;
+            }
+
+            $("#err").text('');
+            $("#form").submit();
+        });
+    })
+</script>
+{include file="public/footer" /}

@@ -1,0 +1,106 @@
+{include file="public/header" /}
+
+<div class="register-content" style="background: url(__PUBLIC__/images/retrievebg.jpg) repeat;
+    background-size: 100%;">
+    <div class="register-wrap">
+        <div class="register-title">注册信息</div>
+        <form action="{:url('regsiter')}" method="post" id="form">
+        <div class="user">
+            <p class="input-wrap">
+                <span class="red-star">*</span>
+                <label>
+                    <span class="fa fa-user-o icon"></span>
+                    <input type="text" name="name" id="user" class="inpeeut" placeholder="请输入用户名" >
+                    <span></span>
+                </label>
+            </p>
+        </div>
+        <div class="email">
+            <p class="input-wrap">
+                <span class="red-star">*</span>
+                <label>
+                    <span class="fa fa-envelope-o icon"></span>
+                    <input type="text" name="email" id="email" class="email" placeholder="请输入邮箱">
+                </label>
+            </p>
+        </div>
+        <div class="password">
+            <p class="input-wrap">
+                <span class="red-star">*</span>
+                <label>
+                    <span class="fa fa-unlock-alt icon"></span>
+                    <input type="password" name="pass" id="pass" class="inpeeut" placeholder="请输入密码">
+                </label>
+            </p>
+        </div>
+        <div class="repassword">
+            <p class="input-wrap">
+                <span class="red-star">*</span>
+                <label>
+                    <span class="fa fa-unlock-alt icon"></span>
+                    <input type="password" id="repass" class="inpeeut" placeholder="请确认密码">
+                </label>
+            </p>
+        </div>
+        <div class="agreement">
+            <p class="agreement-content">
+                <label>
+                <input type="checkbox" id="che"> 我已阅读并同意遵守
+                <a href="">《用户使用协议》</a>和<a href="">《安全支付协议》</a></label>
+            </p>
+        </div>
+        <div>
+            <div id="err"></div>
+            <input class="submit-button tijiao" id="subbtn" type="button" value="注册" />
+        </div>
+        </form>
+        <p class="exit-account">已有账号？<a href="/#login">点击登录</a></p>
+    </div>
+</div>
+<script>
+    $(function(){
+
+        $("#subbtn").click(function () {
+            user = $("#user").val();
+            email = $("#email").val();
+            pass = $("#pass").val();
+            repass = $("#repass").val();
+            console.log(email);
+            console.log(pass);
+            console.log(repass);
+            if(user == ''){
+                $("#err").text('用户名不能为空');
+                return false;
+            }
+            if(email == ''){
+                $("#err").text('邮箱不能为空');
+                return false;
+            }
+            em = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+            if(!em.test(email)){
+                $("#err").text('邮箱格式有误');
+                return false;
+            }
+            if(pass == '' || pass.length < 6){
+                $("#err").text('密码不能为空且不能小于六位');
+                return false;
+            }
+            if(repass == ''){
+                $("#err").text('确认密码不能为空');
+                return false;
+            }
+            if(pass != repass){
+                $("#err").text('两次密码不相等');
+                return false;
+            }
+            if(!$("#che").is(':checked')){
+                $("#err").text('请阅读并勾选协议');
+                return false;
+            }
+
+            $("#err").text('');
+            $("#form").submit();
+        });
+    })
+</script>
+{include file="public/footer" /}

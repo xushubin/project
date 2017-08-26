@@ -1,0 +1,97 @@
+{include file="public/header" /}
+<div id="page-wrapper" class="user-management">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    任务管理 <small>更换TA</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-user"></i> 更换TA
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 bill-order">
+                <form action="{:url('modifyta')}" id="form" method="post">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <td>内部编号</td>
+                        <td>{$msg.taskid}</td>
+                    </tr>
+                    <tr>
+                        <td>任务绩点</td>
+                        <td>{$msg.jidian}</td>
+                    </tr>
+                    <tr>
+                        <td>原始TA</td>
+                        <td>{$msg.ta}</td>
+                    </tr>
+                    <tr>
+                        <td>原始TA获得绩点/比重</td>
+                        <td><input name="jidian" type="text" id="" value="0" class="form-control wd50"></td>
+                    </tr>
+                    <tr>
+                        <td>新任TA</td>
+                        <td>
+                            <select id="ta" name="ta" class="form-control wd50">
+                                <option value="0">请选择TA人员</option>
+                                {foreach $tas as $v}
+                                <option value="{$v.id}">{$v.name}</option>
+                                {/foreach}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>新任TA获得绩点/比重</td>
+                        <td><input name="jidian" type="text" value="{$msg.jidian}" class="form-control wd50"></td>
+                    </tr>
+                    <tr>
+                        <td width="15%">结束日期</td>
+                        <td><input type="text" id="time2" name="enddate" class="form-control wd50"></td>
+                    </tr>
+                    <script>
+                        $("#time2").jeDate({
+                            isinitVal:true,
+                            ishmsVal:true,
+                            minDate: '2016-06-16 23:59:59',
+                            format:"YYYY-MM-DD hh:mm:ss",
+                            zIndex:3000,
+                        })
+                    </script>
+                    <tr>
+                        <td width="15%">任务级别</td>
+                        <td><select name="tasklevel" id="tasklevel" class="form-control wd50">
+                            <option value="1" {eq name="msg.tasklevel" value="1"} selected {/eq}>A</option>
+                            <option value="2" {eq name="msg.tasklevel" value="2"} selected {/eq}>B</option>
+                            <option value="3" {eq name="msg.tasklevel" value="3"} selected {/eq}>C</option>
+                            <option value="4" {eq name="msg.tasklevel" value="4"} selected {/eq}>D</option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>内部备注</td>
+                        <td><input type="text" name="remark" class="form-control wd50"><input type="hidden" name="cid" value="{$msg.cid}"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="hidden" name="cl" value="{$cl}"><input type="hidden" name="id" value="{$msg.id}"></td>
+                        <td><input type="button" id="edb" class="tabtn" value="提交"></td>
+                    </tr>
+                </table>
+                </form>
+            </div>
+            <script>
+                $("#edb").click(function () {
+                    ta = $("#ta").val();
+                    if(ta == 0){
+                        alert('请选择TA人员');
+                    }else{
+                        $("#form").submit();
+                    }
+                })
+            </script>
+        </div>
+    </div>
+</div>

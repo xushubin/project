@@ -1,0 +1,55 @@
+{include file="public/header" /}
+<div class="findteacher-content">
+    <div class="stte-banner"></div>
+</div>
+
+<div>
+{eq name="none" value="0"}
+<div style="width: 1100px;margin: 2% auto;background: white;border-radius: 10px;font-size: 25px;">
+    <img width="100%;" src="__PUBLIC__images/cw.jpg">
+</div>
+{else /}
+{foreach $msg as $v}
+<div class="stte">
+     <a href="{:url('talk/inde','id='.$v['teid'])}" target="_blank">
+         <div class="chat"><img src="__PUBLIC__/images/chat.png" >
+
+         </div>
+     </a>
+     <a href="{$v.href}">
+     <div>
+         <div class="st1">
+           <div class="stitle">{$v.title}</div>
+           <div class="us">
+               <img src="__PUBLIC__/images/uu.png" style="    margin-right: 1%;"><span class="stmsg">{$v.sid}</span>
+            </div>
+           <div class="us"><img src="__PUBLIC__/images/ss.png" style="    margin-right: 1%;">
+               <span class="stmsg">辅导科目：<span class="km">{$v.course|cour}</span></span>
+                <span class="stmsg">辅导类型：<span class="km">{$v.tutoty}</span></span>
+           </div>
+           <div class="us"><img src="__PUBLIC__/images/zz.png" style="    margin-right: 1%;">
+               <span class="stmsg">其他资料：
+                {foreach $v.attafile as $i}
+                   <a href="__UPLOAD__{$i}">{$i}</a>  &nbsp;&nbsp;
+                {/foreach}
+               </span></div>
+         </div>
+         <div class="st2">
+            <div class="stat"><span class="sst">{$v.taskstatus}</span></div>
+            <div class="stim"><img src="__PUBLIC__/images/443_20.png" style="    margin-right: 3%;">截止时间：<span class="stbig">{$v.deadtime}</span></div>
+         </div>
+    </div>
+    </a>
+</div>
+{/foreach}
+</div>
+{/eq}
+
+<div class="recommend-content">
+    <div class="pagination-wrap">
+        {$page}
+    </div>
+</div>
+
+
+{include file="public/footer" /}

@@ -1,0 +1,53 @@
+{include file="public/header" /}
+
+<div id="page-wrapper" class="create-order">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    任务管理 <small>课程管理</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-tasks"></i> 课程管理
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered task-table table-hover">
+                    <thead>
+                    <tr>
+                        <td>内部编号</td>
+                        <td>课程名称</td>
+                        <td>状态</td>
+                        <td>当前ta</td>
+                        <td>开始日</td>
+                        <td>结束日</td>
+                        <td>时长</td>
+                        <td>操作</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {foreach name="msg" item="p"}
+                    <tr>
+                        <td>{$p.couid}</td>
+                        <td>{$p.tasktitle}</td>
+                        <td>{$p.coustatus|cou}</td>
+                        <td>{$p.ta}</td>
+                        <td>{$p.startdate}</td>
+                        <td>{$p.enddate}</td>
+                        <td>{$p.length}</td>
+                        <td><a href="{:url('coudetal','id='.$p['id'])}" ><button class="tabtn">查看详情</button></a></td>
+                    </tr>
+                    {/foreach}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

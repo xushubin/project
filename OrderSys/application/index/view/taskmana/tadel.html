@@ -1,0 +1,81 @@
+{include file="public/header" /}
+<div id="page-wrapper" class="user-management">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    任务管理 <small>绩效详情</small><a style="font-size: 15px;padding: 20px;" href="javaScript:history.back(-1)">返回</a>
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-user"></i> 绩效详情
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 bill-order" id="chai">
+                <table class="table table-bordered table-hover">
+
+                    <tr>
+                        <td>TA姓名</td>
+                        <td>任务编号</td>
+                        <td>任务/课程绩点</td>
+                        <td>绩点变化</td>
+                        <td>最终绩点</td>
+                        <td>时间</td>
+                    </tr>
+                    {foreach $per as $v}
+                    <tr>
+                        <td>{$v.ta}</td>
+                        <td>{$v.tid}</td>
+                        <td>{$v.taskji}</td>
+                        <td>{$v.jidian}</td>
+                        <td>{$v.final}</td>
+                        <td>{$v.time|date="Y-m-d H:i:s",###}</td>
+                    </tr>
+                    {/foreach}
+                </table>
+            </div>
+        </div>
+        <div>
+            <form class="form-horizontal" action="{:url('jidao')}" method="post">
+                <div class="form-group">
+                    <label for="time1" class="col-sm-1 control-label">起始时间</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="time1" name="time1" class="form-control">
+                    </div>
+                    <label for="time2" class="col-sm-1 control-label">结束时间</label>
+                    <div class="col-sm-2">
+                        <input type="text" name="time2" id="time2" class="form-control">
+                    </div>
+                    <div class="col-sm-1"><input type="hidden" name="id" value="{$id}">
+                        <button class="btn btn-primary" type="submit">导出该时间段内的绩点数据</button>
+                    </div>
+                </div>
+
+            </form>
+            <script>
+                $("#time1").jeDate({
+                    isinitVal:true,
+                    ishmsVal:true,
+                    minDate: '2016-06-16',
+                    format:"YYYY-MM-DD",
+                    zIndex:3000,
+                })
+
+                $("#time2").jeDate({
+                    isinitVal:true,
+                    ishmsVal:true,
+                    minDate: '2016-06-16',
+                    format:"YYYY-MM-DD",
+                    zIndex:3000,
+                })
+            </script>
+        </div>
+    </div>
+</div>
+
+{include file="public/footer" /}

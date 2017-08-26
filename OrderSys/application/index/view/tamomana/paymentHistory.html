@@ -1,0 +1,253 @@
+{include file="public/header" /}
+<div id="page-wrapper" class="payment-history">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                            尾款管理 <small>付款记录</small>
+                        </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-tasks"></i> 付款记录
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="alert alert-info" role="alert">
+                    <p>用户编号为 <strong>{$msg.userid}</strong>，本任务编号为 <strong>{$msg.orderid}</strong>,付款条目{$pay.payentry}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-3">
+                <form id="from" action="{:url('payment')}" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label>付款类型</label>
+                        <select name="paytype" class="form-control">
+                            <option value="">请填写付款类型</option>
+                            <option>全款</option>
+                            <option>追加</option>
+                            <option>首款</option>
+                            <option>尾款1</option>
+                            <option>尾款2</option>
+                            <option>尾款3</option>
+                            <option>尾款4</option>
+                            <option>尾款5</option>
+                            <option>其他</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>支付账户</label>
+                        <select name="payacc" class="form-control">
+                            <option value="">请填写支付账户</option>
+                            <option>paypal-l</option>
+                            <option>weixin-t</option>
+                            <option>weixin-c</option>
+                            <option>支付宝-l</option>
+                            <option>paypal-w</option>
+                            <option>weixin-w</option>
+                            <option>支付宝-w</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>支付金额</label>
+                        <input type="text" name="paymoney" id="money" class="form-control" placeholder="请填写支付金额" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="file">上传付款截图1</label>
+                        <div class="inputfile-wrap">
+                            <a class="input-file input-fileup" href="javascript:;">
+                                        + 添加附件<input size="100" type="file" name="file[]" id="file">
+                                    </a>
+                            <div class="fileerrorTip1"></div>
+                            <div class="showFileName1"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="file2">上传付款截图2</label>
+                        <div class="inputfile-wrap">
+                            <a class="input-file input-fileup2" href="javascript:;">
+                                        + 添加附件<input size="100" type="file" name="file[]" id="file2">
+                                    </a>
+                            <div class="fileerrorTip2"></div>
+                            <div class="showFileName2"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="paymark">交易备注</label>
+                        <textarea class="form-control" id="paymark" name="paymark" rows="3"></textarea>
+                    </div>
+                    <div class="form-group clearfix">
+                        <div class="pull-right">
+                            <input type="hidden" name="orderid" value="{$msg.orderid}">
+                            <input type="hidden" name="payentry" value="{$pay.payentry}">
+                            <input type="hidden" id="shitotal" name="shitotal" value="{$msg.shitotal}">
+                            <input type="hidden" name="userid" value="{$msg.userid}">
+                            <input type="hidden" name="paystatus" id="paystatus" value="已付清">
+                            <input type="hidden" name="lastdate" id="lastdate" value="">
+                            <input type="hidden" name="payid" id="payid" value="{$pay.payid}">
+                            <input type="hidden" name="id" id="id" value="{$id}">
+                            <button id="pay" class="btn btn-primary exit-tail" type="button">有尾款</button>
+                            <button id="wu" type="submit" class="btn btn-primary">无尾款</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="model">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">尾款金额: <strong id="jin"></strong> </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" id="text" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">返回</button>
+                <button type="button" id="sub" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$(function() {
+    $("#text").jeDate({
+        isinitVal:true,
+        ishmsVal:true,
+        minDate: '2016-06-16',
+        format:"YYYY-MM-DD",
+        zIndex:3000,
+    })
+
+    //显示上传文件的文件名
+    $(".input-fileup").on("change", "input[type='file']", function() {
+        var that = this;
+        fileadd(".fileerrorTip1", ".showFileName1", that);
+    })
+    $(".input-fileup2").on("change", "input[type='file']", function() {
+        var that = this;
+        fileadd(".fileerrorTip2", ".showFileName2", that);
+    })
+
+    function fileadd(fileerrorTip, showFileName, that) {
+        console.log($(fileerrorTip));
+        console.log($(showFileName));
+        var filePath = $(that).val();
+        if (filePath.indexOf("jpg") != -1 || filePath.indexOf("png") != -1) { //不是jpg或者png格式的文件，显示上传文件类型有误
+            $(fileerrorTip).html("").hide();
+            var arr = filePath.split('\\');
+            var fileName = arr[arr.length - 1];
+            $(showFileName).html(fileName);
+        } else {
+            $(showFileName).html("");
+            $(fileerrorTip).html("您未上传文件，或者您上传文件类型有误！").show();
+            return false
+        }
+    }
+
+    $("#pay").click(function() {
+        shi = $("#shitotal").val();
+        money = $("#money").val();
+        diff = shi - money;
+        console.log(diff);
+
+        if ($("select[name='paytype']").val() == "") {
+            alert("付款类型不能为空");
+        } else if ($("select[name='payacc']").val() == "") {
+            alert("支付账户不能为空");
+        } else if ($("input[name='paymoney']").val() == "") {
+            alert("支付金额不能为空");
+        } else if($("#file").val() == ""){
+            alert('付款截屏1不能为空');
+        }else{
+            if (diff == 0) {
+                alert('您当前无尾款，请点击无尾款');
+            } else if (diff > 0) {
+                $("#model").modal('show');
+            } else {
+                alert('你当前支付的金额超出实付金额');
+                return false;
+            }
+        }
+
+        jin = shi - money;
+        $("#jin").text(jin);
+    });
+
+    $("#sub").click(function() {
+        $("#paystatus").val('尾款未付');
+        $("#lastdate").val($("#date").val());
+        $("#model").modal('hide');
+        document.getElementById("from").submit();
+    });
+
+    $("#wu").click(function() {
+        $('#from').bootstrapValidator({
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    paytype: {
+                        validators: {
+                            notEmpty: {
+                                message: '付款类型不能为空'
+                            }
+                        }
+                    },
+                    payacc: {
+                        validators: {
+                            notEmpty: {
+                                message: '支付账户不能为空'
+                            }
+                        }
+                    },
+                    paymoney: {
+                        validators: {
+                            notEmpty: {
+                                message: '支付金额不能为空'
+                            },
+                            regexp: {
+                                regexp: /^[0-9]+$/,
+                                message: '支付金额请填写数字'
+                            }
+                        }
+                    }
+
+                }
+            })
+
+        file = $("#file").val();
+        if(file == ''){
+            alert('付款截屏1必须');
+            return false;
+        }
+        shi = $("#shitotal").val();
+        money = $("#money").val();
+        console.log(file);
+        diff = shi - money;
+        if (diff >0) {
+            alert('您当前有尾款，请点击有尾款填写下一笔日期');
+            return false;
+        }else if(diff<0){
+            alert('你当前支付的金额超出实付金额');
+            return false;
+        }
+
+    });
+
+})
+</script>
+{include file="public/footer" /}

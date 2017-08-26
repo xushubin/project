@@ -1,0 +1,84 @@
+{include file="public/header" /}
+
+<div id="page-wrapper" class="create-order">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    尾款管理 <small>尾款管理</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-tasks"></i> 尾款管理
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="alert alert-info" role="alert">
+                    <p>查看分类:<strong>{$oth}</strong>
+                    	<span class="tail-text">请选择尾款到账时间:</span>
+                        <select onchange="chan()" id="sel" class="form-control tail-select">
+                            <option {eq name="d" value="5" } selected {/eq} value="{:url('index?d=5')}">5日</option>
+                            <option {eq name="d" value="15" } selected {/eq} value="{:url('index?d=15')}">15日</option>
+                            <option {eq name="d" value="30" } selected {/eq} value="{:url('index?d=30')}">30日</option>
+                            <option {eq name="d" value="-1" } selected {/eq} value="{:url('index?d=-1')}">逾期</option>
+                            <option {eq name="d" value="all" } selected {/eq} value="{:url('index?d=all')}">全部</option>
+                        </select>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered tail-table">
+                    <thead>
+                    <tr>
+                        <td>任务编号</td>
+                        <td>用户编号</td>
+                        <td>销售人员</td>
+                        <td>任务标题</td>
+                        <td>付款状态</td>
+                        <td>尾款金额</td>
+                        <td>尾款日期</td>
+                        <td>交易备注</td>
+                        <td>任务状态</td>
+                        <td>支付尾款</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $pay as $v}
+                    <tr>
+                    <td>{$v.orderid}</td>
+                    <td>{$v.userid}</td>
+                    <td>{$v.saleper}</td>
+                    <td>{$v.tasktitle}</td>
+                    <td>
+                        <span style="color:red;">{$v.paystatus}</span>
+                    </td>
+                    <td>${$v.remain|two}</td>
+                    <td>{$v.lastdate}</td>
+                    <td>{$v.paymark}</td>
+                    <td>{$v.taskstatus|statu}</td>
+                    <td>
+                        <a href="{:url('payhis','id='.$v['id'])}" target="_blank"><button class="btn btn-primary">支付</button></a>
+                    </td>
+                    </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function chan() {
+        d = $("#sel").val();
+        window.location.href=d;
+        console.log(d);
+    }
+</script>
+{include file="public/footer" /}

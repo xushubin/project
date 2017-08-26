@@ -1,0 +1,117 @@
+{include file="public/public" /}
+
+<div style="font-size: 20px;margin: 1%">{$msg.numid}{$msg.profe|name} - {$msg.subject} 报价</div>
+
+
+<div class="cla">
+    <form action="/index/index/addtwo" id="form" method="post">
+
+        <div class="form-group mt">
+            <label for="product" class="fs20">请选择产品类型</label>
+            <select id="product" name="product" class="form-control">
+                <option value="0">请选择</option>
+                {foreach $msg1 as $p}
+                <option {eq name="p.id" value="$baojia.product"} selected {/eq} value="{$p.id}">{$p.name}</option>
+                {/foreach}
+            </select>
+        </div>
+
+        <div class="form-group mt">
+            <label for="from" class="fs20">请选择形式</label>
+            <select id="from" name="from" class="form-control">
+                <option value="0">请选择</option>
+                {foreach $msg2 as $p}
+                <option {eq name="p.id" value="$baojia.from"} selected {/eq} value="{$p.id}">{$p.name}</option>
+                {/foreach}
+            </select>
+        </div>
+
+        <div class="form-group ">
+            <label for="dead" class="fs20">请选择时区并输入时间</label>
+            <div>
+                <select id="dead" name="dead" class="form-control select flm">
+                    <option {eq name="baojia.dead" value="0"} selected {/eq} value="0">请选择</option>
+                    <option {eq name="baojia.dead" value="1"} selected {/eq} value="1">东部时间</option>
+                    <option {eq name="baojia.dead" value="2"} selected {/eq} value="2">中部时间</option>
+                    <option {eq name="baojia.dead" value="3"} selected {/eq} value="3">山地时间</option>
+                    <option {eq name="baojia.dead" value="4"} selected {/eq} value="4">西部时间</option>
+                    <option {eq name="baojia.dead" value="5"} selected {/eq} value="5">北京时间</option>
+                </select>
+                <input type="text" name="dtime" id="dtime" value="{$baojia.dtime}" class="form-control select" placeholder="请输入时间">
+            </div>
+        </div>
+
+        <div class="form-group mt">
+            <label for="inlineRadio2" class="fs20 mt">请选择成绩要求</label>
+            <div>
+                <label class="radio-inline">
+                    <input type="radio" name="grade" id="inlineRadio1" value="1" {eq name="baojia.grade" value="1"} checked {/eq} > A
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="grade" id="inlineRadio2" value="2" {eq name="baojia.grade" value="2"} checked {/eq}> B
+                </label>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="task" class="fs20">请输入任务占比</label><span>(非必选)</span>
+            <div>
+                <input type="text" id="task" name="task" class="form-control select flm" value="{$baojia.task}" placeholder="请输入任务名称">
+                <div class="input-group">
+                    <input type="text" name="percent" class="form-control select" value="{$baojia.percent}" placeholder="请输入任务占比">
+                    <span class="input-group-addon">%</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="clear: both; clear: both;padding-top: 1%;width: 20%;margin: 0 auto;">
+            <input type="hidden" name="id" value="{$id}"/>
+            <a href="{:url('index',['id'=>$id])}"><button type="button"class="btn btn-primary" style="width: 44%;padding: 2%;">返回</button></a>
+            <button type="button" onclick="submiit()" class="btn btn-primary" style="width: 44%;padding: 2%;">确定</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    jeDate({
+        dateCell:"#dtime",
+        format:"YYYY年MM月DD日 hh:mm",
+        isinitVal:true,
+        isTime:true, //isClear:false,
+        minDate:"2016-09-19 00:00:00"
+        //okfun:function(val){alert(val)}
+    });
+
+    function submiit() {
+        if($("#product").val() == 0){
+            alert('请选择产品类型');
+            return false;
+        }
+
+        if($("#from").val() == 0){
+            alert('请选择形式');
+            return false;
+        }
+
+        if($("#dead").val() == 0){
+            alert('请选择时区');
+            return false;
+        }
+
+        if($("#dtime").val() == ''){
+            alert('请输入或选择时间');
+            return false;
+        }
+
+        d = new Date();
+        time = d.getTime() / 1000;
+        time2 = Date.parse(new Date($("#dtime").val())) / 1000;
+        if (time2 < time) {
+            alert('请选择正确的时间');
+            return false;
+        }
+
+        $("#form").submit();
+    }
+</script>

@@ -1,0 +1,79 @@
+{include file="public/header" /}
+<div id="page-wrapper" class="user-management">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    任务管理 <small>{$msg.orderid}任务详情</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-user"></i> {$msg.orderid}任务详情
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <ul id="myTabs" class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="{:url('ordetal','id='.$msg['id'])}" >任务详情</a></li>
+            <li role="presentation" class=""><a href="{:url('orexam','id='.$msg['id'])}" >审核状态</a></li>
+            <li role="presentation" class=""><a href="{:url('orlog','id='.$msg['id'])}" >任务日志</a></li>
+        </ul>
+        <div class="row">
+            <div class="col-lg-12 bill-order">
+                <form action="{:url('ordji')}" method="post">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <td width="15%">任务类别</td>
+                        <td width="18%">{$msg.taskid|}</td>
+                        <td width="15%">截止时间</td>
+                        <td width="18%">{$msg.bj|date="Y-m-d H:i:s",###}</td>
+                        <td width="15%">距截止时间</td>
+                        <td>{$msg.time}</td>
+                    </tr>
+                    <tr>
+                        <td width="15%">任务标题</td>
+                        <td>{$msg.tasktitle}</td>
+                        <td width="15%">产品数量或比重</td>
+                        <td>{$msg.ductnum}</td>
+                        <td width="15%">销售备注</td>
+                        <td>{$msg.remark}</td>
+                    </tr>
+                    <tr>
+                        <td width="15%">TA</td>
+                        <td>
+                            {eq name="msg.ta" value=""}
+                            <select class="form-control" name="ta">
+                                <option value="0">请选择TA</option>
+                                {foreach $tas as $v}
+                                <option value="{$v.id}">{$v.name}</option>
+                                {/foreach}
+                            </select>
+                            {else/}
+                            {$msg.ta}
+                            {/eq}
+                        </td>
+                        <td width="15%">报价绩点或薪酬</td>
+                        <td><input type="text" class="form-control" value="{$msg.baoji}" name="baoji"/></td>
+                        <td width="15%">最终绩点或薪酬</td>
+                        <td><input type="text" class="form-control" value="{$msg.finalji}" name="finalji"/></td>
+                    </tr>
+                    <tr>
+                        <td>绩点备注</td>
+                        <td><input type="text" class="form-control" value="{$msg.jiremark}" name="jiremark"></td>
+                        {neq name="Think.session.class" value="4"}
+                        <td><input class="tabtn" type="submit"><input type="hidden" name="id" value="{$msg.id}"/></td>
+                        {neq name="msg.taskid" value="1"}
+                        <td><a href="{:url('editta','cl=3&id='.$msg['id'])}"><button type="button" class="tabtn">更换TA</button></a></td>
+                        {/neq}
+                        {/neq}
+
+                    </tr>
+                </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="public/footer" /}

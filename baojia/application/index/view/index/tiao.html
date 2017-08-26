@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>报价单</title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap.min.css"/>
+    <style>
+        .nig{
+            font-size: 30px;
+            padding-top: 1%;
+        }
+        .table-head{
+            
+            color: #fff;
+        }
+        .table-head th{
+            background: #337ab7;
+        }
+        .table{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="nig" style="float: left">报价单</div>
+<div style="font-size: 20px;clear: both">{$pro.numid}{$pro.profe|name}专业{$pro.subject}报价</div>
+<div style="">
+    <table class="table table-bordered table-striped table-hover">
+        <tr class="table-head">
+            <th>类型</th>
+            <th>单价</th>
+            <th>数量</th>
+            <th>总价（单位美元）</th>
+        </tr>
+
+        {foreach $mag as $p}
+        <tr>
+            <td>{$p.name}</td>
+            <td>{$p.price}</td>
+            <td>{$p.num}</td>
+            <td>{$p.total}</td>
+        </tr>
+        {/foreach}
+
+    </table>
+
+</div>
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <th></th>
+            <th>东部时间</th>
+            <th>中部时间</th>
+            <th>山地时间</th>
+            <th>西部时间</th>
+            <th>北京时间</th>
+        </tr>
+
+        {foreach name="data" item="p" }
+        <tr>
+            <td>{$key|msg}</td>
+            {foreach $p as $v}
+                <td>{$v.m}  &nbsp;&nbsp;&nbsp; {$v.t|date="Y-m-d H:i",###}  </td>
+            {/foreach}
+        </tr>
+        {/foreach}
+
+
+
+    </table>
+
+
+</div>
+
+</body>
+</html>

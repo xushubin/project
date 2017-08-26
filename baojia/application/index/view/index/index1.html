@@ -1,0 +1,236 @@
+{include file="public/public" /}
+
+
+<div class="cla">
+<form action="/index/index/showbjd" id="form" method="post">
+    <div class="form-group">
+        <label for="clas" class="fs20">请选择专业和科目</label>
+        <div>
+        <select id="clas" class="form-control sele flm" name="clas" onchange="change()">
+            <option value="0">请选择</option>
+            {foreach $msg1 as $p}
+                <option value="{$p.id}">{$p.name}</option>
+            {/foreach}
+        </select>
+        <select id="profess" name="profess" class="form-control sele">
+            <option value=0>请选择</option>
+        </select>
+        </div>
+    </div>
+
+    <div class="form-group sele flm mt">
+        <label for="product" class="fs20">请选择产品类型</label>
+        <select id="product" name="product" class="form-control">
+            <option value="0">请选择</option>
+            {foreach $msg5 as $p}
+            <option value="{$p.id}">{$p.name}</option>
+            {/foreach}
+        </select>
+    </div>
+
+    <div class="form-group sele mt">
+        <label for="from" class="fs20">请选择形式</label>
+        <select id="from" name="from" class="form-control">
+            <option value="0">请选择</option>
+            {foreach $msg4 as $p}
+            <option value="{$p.id}">{$p.name}</option>
+            {/foreach}
+        </select>
+    </div>
+
+    <div class="form-group ">
+        <label for="dead" class="fs20">请选择时区并输入时间</label>
+        <div>
+        <select id="dead" name="dead" class="form-control sele flm">
+            <option value="0">请选择</option>
+            <option value="1">东部时间</option>
+            <option value="2">中部时间</option>
+            <option value="3">山地时间</option>
+            <option value="4">西部时间</option>
+            <option value="5">北京时间</option>
+        </select>
+        <input type="datetime-local" name="dtime" id="dtime" class="form-control sele" placeholder="请输入时间">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="task" class="fs20">请输入任务占比</label><span>(非必选)</span>
+        <div>
+            <input type="text" id="task" name="task" class="form-control sele flm" placeholder="请输入任务名称">
+            <div class="input-group">
+                <input type="text" name="percent" class="form-control sele" placeholder="请输入任务占比">
+                <span class="input-group-addon">%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="task" class="fs20">请选择成绩要求</label>
+        <div>
+        <label class="radio-inline">
+            <input type="radio" name="grade" id="inlineRadio1" value="1"> A
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="grade" id="inlineRadio2" value="2" checked> B
+        </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="fs20">请输入描述评估</label>
+        <span>(至少选择一项)</span>
+        <div class="form-inline">
+            {foreach $msg2 as $p}
+            <div style="float: left;width: 49%;    margin-bottom: 10px;" >
+                <label for="{$p.id}" style="    width: 12%;"> {$p.name}</label>
+                <input type="text" class=" form-control xu" name="assess{$p.id}" value="0" style="width: 85%;" id="{$p.id}" >
+            </div>
+            {/foreach}
+        </div>
+    </div>
+<div style="clear: both;"></div>
+    <div class="form-group ">
+        <label for="privi" class="fs20">请选择并输入优惠信息</label>
+        <span>(非必选)</span>
+        <span><a href="#" onclick="add()">添加更多优惠信息</a></span>
+        <div>
+            <select id="privi" class="form-control sele flm">
+                <option value="0">请选择</option>
+                <option value="1">VIP用户</option>
+                <option value="2">特别优惠</option>
+                <option value="3">本期促销</option>
+                <option value="4">补偿</option>
+            </select>
+            <input type="text" name="privi" class="form-control sele" placeholder="请输入金额">
+        </div>
+
+        <div id="privi2" class="dn">
+            <select class="form-control sele flm">
+                <option value="0">请选择</option>
+                <option value="1">VIP用户</option>
+                <option value="2">特别优惠</option>
+                <option value="3">本期促销</option>
+                <option value="4">补偿</option>
+            </select>
+            <input type="text" name="privi2" class="form-control sele" placeholder="请输入金额">
+        </div>
+
+        <div id="privi3" class="dn">
+            <select class="form-control sele flm">
+                <option value="0">请选择</option>
+                <option value="1">VIP用户</option>
+                <option value="2">特别优惠</option>
+                <option value="3">本期促销</option>
+                <option value="4">补偿</option>
+            </select>
+            <input type="text" name="privi3" class="form-control sele" placeholder="请输入金额">
+        </div>
+
+        <div id="privi4" class="dn">
+            <select class="form-control sele flm">
+                <option value="0">请选择</option>
+                <option value="1">VIP用户</option>
+                <option value="2">特别优惠</option>
+                <option value="3">本期促销</option>
+                <option value="4">补偿</option>
+            </select>
+            <input type="text" name="privi4" class="form-control sele" placeholder="请输入金额">
+        </div>
+
+    </div>
+
+
+    <div style="clear: both; clear: both;padding-top: 1%;width: 20%;margin: 0 auto;">
+        <button type="button" onclick="submiit()" class="btn btn-primary" style="width: 100%;padding: 2%;">提交</button>
+    </div>
+</form>
+    <script>
+        function change() {
+            pid = $("#clas").val();
+            $.post(
+                "{:url('index/getpro')}",
+                {pid:pid},
+                function(data){
+                    $("#profess").empty();
+                    $("#profess").append("<option value=0>请选择科目</option>"+data);
+                }
+            );
+        }
+
+        function add() {
+            if($('#privi2').css('display') == 'none'){
+                $('#privi2').show();
+            }else if($('#privi3').css('display') == 'none'){
+                $('#privi3').show();
+            }else if($('#privi4').css('display') == 'none'){
+                $('#privi4').show();
+            }else{
+                alert('添加满了，不能在添加了');
+            }
+        }
+        
+        function submiit() {
+
+
+            if($("#clas").val() == 0){
+                alert('请选择专业');
+                return false;
+            }
+
+            if($("#profess").val() == 0){
+                alert('请选择科目');
+                return false;
+            }
+
+            if($("#product").val() == 0){
+                alert('请选择产品类型');
+                return false;
+            }
+
+            if($("#from").val() == 0){
+                alert('请选择形式');
+                return false;
+            }
+
+            if($("#dead").val() == 0){
+                alert('请选择时区');
+                return false;
+            }
+
+            if($("#dtime").val() == ''){
+                alert('请输入或选择时间');
+                return false;
+            }
+
+                d = new Date();
+                time = d.getTime() / 1000;
+                time2 = Date.parse(new Date($("#dtime").val())) / 1000;
+                if (time2 < time) {
+                    alert('请选择正确的时间');
+                    return false;
+                }
+
+
+            if($("#clas").val() == 0){
+                alert('请选择专业');
+                return false;
+            }
+
+            i=0;
+            $(".xu").each(function(){
+                if($(this).val() != 0){
+                    i++;
+                }
+            });
+
+            if(i == 0){
+                alert('请至少填写一项描述评估');
+                return false;
+            }
+
+            $("#form").submit();
+        }
+    </script>
+</div>
+</body>
+</html>

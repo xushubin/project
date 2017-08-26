@@ -1,0 +1,105 @@
+{include file="public/header" /}
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                            任务创建 <small>账单详情</small>
+                        </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-tasks"></i> 账单详情
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="alert alert-info" role="alert">
+                    <p>用户编号为 <strong>{$msg.userid}</strong>，本任务编号为 <strong>{$msg.orderid}</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <form action="{:url('tamomana/paymentHistory')}" method="post" id="paymenthistory">
+                <div class="col-lg-6 col-lg-offset-3">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td>#</td>
+                                <td>报价单</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>单价</td>
+                                <td>{$unit}</td>
+                            </tr>
+                            <tr>
+                                <td>数量</td>
+                                <td>{$post.ductnum}</td>
+                            </tr>
+                            <tr>
+                                <td>附加</td>
+                                <td>{$post.addmoney|two}</td>
+                            </tr>
+                            <tr>
+                                <td>折扣</td>
+                                <td>-{$post.discount|two}</td>
+                            </tr>
+                            <tr>
+                                <td>计算总价</td>
+                                <td>{$post.zontotal|two}</td>
+                            </tr>
+                            <tr>
+                                <td>实收总价</td>
+                                <td>
+                                    <input type="text" class="form-control" name="shitotal" placeholder="请填写实收总价" id="shitotal">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-lg-6 col-lg-offset-3 clearfix">
+                    <div class="pull-right">
+                        <input type="hidden" name="id" value="{$post.id}">
+                        <a href="{:url('fanorder','id='.$post.id.'&taskid='.$taskid)}">
+                            <button type="button" class="btn btn-primary">返回</button>
+                        </a>
+                        <button type="submit" class="btn btn-primary">添加付款记录</button>
+                    </div>
+                </div>
+            </form>
+            <div class="modal fade" id="modalInvoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">提示</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>实收总价不能为空</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+<script>
+$(function() {
+    $("#paymenthistory").submit(function() {
+        if ($("#shitotal").val() == "") {
+            $("#modalInvoice").modal();
+            return false;
+        }
+    })
+
+})
+</script>
+{include file="public/footer" /}

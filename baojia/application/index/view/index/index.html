@@ -1,0 +1,65 @@
+{include file="public/public" /}
+
+
+<div class="cla">
+    <form action="{:url('addone')}" id="form" method="post">
+        <div class="form-group">
+            <label for="clas" class="fs20">请选择专业和科目</label>
+            <div>
+                <select id="clas" class="form-control sele flm" name="clas" onchange="change()">
+                    <option value="0">请选择专业</option>
+                    {foreach $msg as $p}
+                    <option {eq name="p.id" value="$clas"} selected {/eq} value="{$p.id}">{$p.name}</option>
+                    {/foreach}
+                </select>
+                <select id="profess" name="profess" class="form-control sele">
+                    <option value=0>请选择科目</option>
+                    {foreach $profess as $p}
+                    <option {eq name="p.id" value="$baojia"} selected {/eq} value="{$p.id}">{$p.subject}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div style="clear: both; clear: both;padding-top: 1%;width: 20%;margin: 0 auto;">
+            <input type="hidden" name="id" value="{$id}"/>
+            <button type="button" onclick="submiit()" class="btn btn-primary" style="width: 100%;padding: 2%;">确定</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function change() {
+        pid = $("#clas").val();
+        $.post(
+            "{:url('index/getpro')}",
+            {pid:pid},
+            function(data){
+                $("#profess").empty();
+                $("#profess").append("<option value=0>请选择科目</option>"+data);
+            }
+        );
+    }
+    
+    function submiit() {
+        if($("#clas").val() == 0){
+            alert('请选择专业');
+            $("#clas").focus();
+            return false;
+        }
+
+        if($("#profess").val() == 0){
+            alert('请选择科目');
+            $("#profess").focus();
+            return false;
+        }
+
+        if($("#profess").val() == null){
+            alert('请重新选择专业和科目');
+            $("#profess").focus();
+            return false;
+        }
+        //return false;
+        $("#form").submit();
+    }
+
+</script>

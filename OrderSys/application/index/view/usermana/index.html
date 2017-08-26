@@ -1,0 +1,108 @@
+{include file="public/header" /}
+<div id="page-wrapper" class="user-management">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    用户管理 <small>用户管理</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-user"></i> 用户管理
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="alert alert-success" role="alert">
+                    <form action="" method="post" class="form-inline user-manage">
+                        <div class="form-group">
+                            <input type="text" name="userid" value="{$userid}" class="form-control" placeholder="请输入用户编号">
+                        </div>
+                        <button type="submit" class="btn btn-primary"> 查询</button>
+                    </form>
+                    {eq name="flag" value="1"}
+                    <p>{$userid}用户名下共有{$orcou}个订单，{$fucou}条付款记录</p>
+                    {/eq}
+                </div>
+            </div>
+        </div>
+
+        {eq name="or" value="1"}
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>订单:</h4>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <td>任务编号</td>
+                        <td>用户编号</td>
+                        <td>成交时间</td>
+                        <td>截止时间</td>
+                        <td>付款状态</td>
+                        <td>附加价格</td>
+                        <td>附加备注</td>
+                        <td>折扣价格</td>
+                        <td>折扣备注</td>
+                        <td>实付总价</td>
+                        <td>任务级别</td>
+                        <td>TA</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $order as $v}
+                        <tr>
+                        <td>{$v.orderid}</td>
+                        <td>{$v.userid}</td>
+                        <td>{$v.ordertime|date='Y-m-d H:i:s',###}</td>
+                        <td>{$v.zone|zone} &nbsp;&nbsp; {$v.deadline|che|date="Y-m-d H:i",###}</td>
+                        <td>{$v.paystatus|red}</td>
+                        <td>${$v.addmoney|two}</td>
+                        <td>{$v.addmark}</td>
+                        <td>{$v.discomar}</td>
+                        <td>${$v.discount|two}</td>
+                        <td>${$v.shitotal|two}</td>
+                        <td>{$v.tasklevel}</td>
+                        <td>{$v.ta}</td>
+                        </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {/eq}
+
+        {eq name="fu" value="1"}
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>付款记录:</h4>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <td>任务编号</td>
+                        <td>交易编号</td>
+                        <td>支付金额</td>
+                        <td>支付日期</td>
+                        <td>支付账户</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $pay as $v}
+                    <tr>
+                        <td>{$v.orderid}</td>
+                        <td>{$v.payid}</td>
+                        <td>${$v.paymoney|two}</td>
+                        <td>{$v.paytime|date='Y-m-d H:i:s',###}</td>
+                        <td>{$v.payacc}</td>
+                    </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {/eq}
+    </div>
+</div>
+{include file="public/footer" /}

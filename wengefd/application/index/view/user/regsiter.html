@@ -1,0 +1,110 @@
+{include file="public/header" /}
+
+<div class="info-content" xmlns="http://www.w3.org/1999/html">
+        <div class="info-wrap">
+            <div class="info-title">完善信息</div>
+            <p class="information"><span>*</span>此类目均为选填</p>
+            <form action="{:url('enrol')}" method="post" id="form" enctype="multipart/form-data">
+            <div class="avartar clearfix">
+                <img src="__PUBLIC__/images/avartar.jpg" width="100px" height="100px" alt="" class="pull-left">
+
+                <div class="avartar-info pull-left">
+                    <label>
+                        <a href="">选择头像</a>
+                        <input type="file" name="file" class="upfile">
+                    </label>
+                </div>
+            </div>
+            <div class="user">
+                <p class="input-wrap">
+                    <label>
+                        <span class="fa fa-user-o icon"></span>
+                        <input type="text" name="username" placeholder="请输入姓名">
+                    </label>
+                </p>
+            </div>
+            <div class="school">
+                <p class="input-wrap">
+                    <label>
+                        <span class="fa fa-university icon"></span>
+                        <input type="text" name="college" placeholder="请填写院校">
+                    </label>
+                </p>
+            </div>
+            <div class="telephone">
+                <p class="input-wrap">
+                    <label>
+                        <span class="fa fa-mobile icon"></span>
+                        <input type="text" name="tel" placeholder="请填写联系电话">
+                    </label>
+                </p>
+            </div>
+            <div class="address">
+                <p class="input-wrap">
+                    <label>
+                        <span class="fa fa-map-marker icon"></span>
+                        <input type="text" name="address" placeholder="请填写地址">
+                    </label>
+                </p>
+            </div>
+            <div class="course">
+                <p class="input-wrap">
+                    <label>
+                        <span class="fa fa-book icon"></span>
+                        <input type="text" name="course" placeholder="请选择课程领域">
+                    </label>
+                </p>
+            </div>
+            <div class="courses" id="course">
+                <span class="active" data="1">课程一</span>
+                <span data="2">课程二</span>
+                <span data="3">课程三</span>
+                <span data="4">课程四</span>
+                <span data="5">课程五</span>
+                <span data="6">课程六</span>
+            </div>
+            <div>
+                <input type="hidden" name="id" value="{$sid}">
+                <input type="hidden" name="msg" id="msg" value="1">
+                <input type="hidden" name="name" value="{$name}">
+                <input class="info-confirm tijiao" id="subbtn" type="submit" value="确认" />
+            </div>
+            </form>
+        </div>
+    </div>
+
+
+<script>
+
+        $('.avartar').each(function(){
+            var $this = $(this),
+                btn = $this.find('.upfile'),
+                img = $this.find('img');
+                btn.on('change',function(){
+                var file = $(this)[0].files[0],
+                    imgSrc = $(this)[0].value,
+                    url = URL.createObjectURL(file);
+                if (!/\.(jpg|jpeg|png|JPG|PNG|JPEG)$/.test(imgSrc)){
+                    alert("请上传jpg或png格式的图片！");
+                    return false;
+                }else{
+                    img.attr('src',url);
+                    img.css({'opacity':'1'});
+                }
+            });
+        });
+
+        $("#course").each(function () {
+            span = $(this).find('span');
+            span.on('click',function () {
+                data = $(this).attr('data');
+                $("#msg").val(data);
+                span.removeClass('active');
+                $(this).addClass('active');
+            });
+        });
+
+
+
+</script>
+{include file="public/footer" /}

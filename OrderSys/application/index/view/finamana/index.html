@@ -1,0 +1,105 @@
+{include file="public/header" /}
+<div id="page-wrapper" class="user-management">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    财务管理 <small>财务管理</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-user"></i> 财务管理
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <ul id="myTabs" class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="{:url('index')}" >全部订单查看</a></li>
+            <li role="presentation" class=""><a href="{:url('last')}" >过去24小时订单(昨天的下午6至今天的下午6点)</a></li>
+            <li role="presentation" class=""><a href="{:url('customize')}" >自定义时间段查询订单</a></li>
+            <li role="presentation" class=""><a href="{:url('payrcod')}" >付款记录</a></li>
+        </ul>
+      <div class="row">
+            <div class="col-lg-12 bill-order">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <td>任务编号</td>
+                            <td>用户编号</td>
+                            <td>成交时间</td>
+                            <td>销售人员</td>
+                            <td>任务标题</td>
+                            <td>报价组</td>
+                            <td>产品数量</td>
+                            <td>付款状态</td>
+                            <td>附加价格</td>
+                            <td>附加备注</td>
+                            <td>折扣价格</td>
+                            <td>折扣备注</td>
+                            <td>实付总价</td>
+                            <td>差异</td>
+                            <td>任务许可</td>
+                            <td>操作</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {foreach $msg as $v}
+                        <tr>
+                            <td>{$v.orderid}</td>
+                            <td>{$v.userid}</td>
+                            <td>{$v.ordertime|date='Y-m-d H:i:s',###}</td>
+                            <td>{$v.saleper}</td>
+                            <td>{$v.tasktitle}</td>
+                            <td>{$v.quotgr}</td>
+                            <td>{$v.ductnum}</td>
+                            <td>{$v.paystatus|red}</td>
+                            <td>${$v.addmoney|two}</td>
+                            <td>{$v.addmark}</td>
+                            <td>${$v.discount|two}</td>
+                            <td>{$v.discomar}</td>
+                            <td>${$v.shitotal|two}</td>
+                            <td>{$v.diff|sty}</td>
+                            <td>
+                                <select onchange="chang({$v.id})" id="sel" class="form-control">
+                                    <option>批准</option>
+                                    <option {eq name="v.misslic" value="拒绝" } selected {/eq}>拒绝</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="tailstatus?id={$v.id}"><button class="btn btn-primary">查看尾款状态</button></a>
+                            </td>
+                        </tr>
+                        {/foreach}
+                    </tbody>
+                </table>
+            </div>
+          <div class="col-lg-12" style="text-align:center">
+
+              {$page}
+          </div>
+          <div class="col-lg-12">
+                <a href="?daochu=1">
+                    <button class="btn btn-success">导出 <i class="fa fa-download"></i></button>
+                </a>
+            </div>
+        </div>
+</div>
+</div>
+<script>
+
+function chang(obj) {
+    sel = $("#sel").val();
+    console.log(sel);
+    $.post(
+        "{:url('chang')}", {
+            misslic: sel,
+            id: obj
+        },
+        function(data) {
+            console.log(data);
+        }
+    );
+}
+</script>
+{include file="public/footer" /}

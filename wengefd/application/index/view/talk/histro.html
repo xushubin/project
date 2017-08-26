@@ -1,0 +1,27 @@
+<style>
+    .talk{
+        background: white;
+    }
+    .tit{
+        background: #00A1FF;
+        border-radius: 5px 5px 0 0;
+        height: 30px;
+        line-height: 30px;
+        color:white;
+        padding-left: 3%;
+    }
+    .tit span{
+        font-size: 10px;
+        padding-left: 3%;
+    }
+    .mg{
+        padding: 2% 3%;
+    }
+</style>
+
+<div class="talk">
+    <div class="tit">{$data.sendname}与{$data.receivename}的聊天历史记录  <span>总共：{$count}条</span></div>
+    {foreach $msg as $it}
+    <div class="mg">{$it.sendname}说：{$it.text}</div>
+    {/foreach}
+</div>

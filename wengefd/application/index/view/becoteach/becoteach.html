@@ -1,0 +1,330 @@
+{include file="public/header" /}
+
+<div class="register-content">
+    <div class="register-wrap">
+        <div class="register-title">申请成为老师</div>
+        <form action="{:url('regsiter')}" method="post" id="form" enctype="multipart/form-data">
+            <div class="user">
+            <div class="avartar clearfix" style="    padding-left: 32px;padding-top: 30px;margin-top: 0">
+                <img src="__PUBLIC__/images/avartar.jpg" width="100px" height="100px" alt="" class="pull-left">
+
+                <div class="avartar-info pull-left">
+                    <label>
+                        <a href="">选择头像</a>
+                        <input type="file" name="avatar" class="upfile">
+                    </label>
+                </div>
+            </div>
+            </div>
+
+            <div class="user">
+                <p class="input-wrap">
+                    <span class="red-star">*</span>
+                    <label>
+                        <span class="fa fa-user-o icon"></span>
+                        <input type="text" name="name" id="name" class="inpeeut" placeholder="请输入用户名" >
+                        <span></span>
+                    </label>
+                </p>
+            </div>
+            <div class="email">
+                <p class="input-wrap">
+                    <span class="red-star">*</span>
+                    <label>
+                        <span class="fa fa-envelope-o icon"></span>
+                        <input type="text" name="email" id="email" class="email" placeholder="请输入邮箱">
+                    </label>
+                </p>
+            </div>
+            <div class="password">
+                <p class="input-wrap">
+                    <span class="red-star">*</span>
+                    <label>
+                        <span class="fa fa-unlock-alt icon"></span>
+                        <input type="password" name="pass" id="pass" class="inpeeut" placeholder="请输入密码">
+                    </label>
+                </p>
+            </div>
+            <div class="repassword">
+                <p class="input-wrap">
+                    <span class="red-star">*</span>
+                    <label>
+                        <span class="fa fa-unlock-alt icon"></span>
+                        <input type="password" id="repass" class="inpeeut" placeholder="请确认密码">
+                    </label>
+                </p>
+            </div>
+
+            <div class="repassword">
+                <p class="input-wrap">
+                    <span class="red-star">&nbsp;</span>
+                    <label>
+                        <span class="fa fa-weixin icon"></span>
+                        <input type="text" name="wechat" class="inpeeut" placeholder="请输入微信号">
+                    </label>
+                </p>
+
+                <p class="input-wrap">
+                    <span class="red-star">&nbsp;</span>
+                    <label>
+                        <span class="fa fa-university icon"></span>
+                        <input type="text" name="college" class="inpeeut" placeholder="请输入院校">
+                    </label>
+                </p>
+
+                <p class="input-wrap">
+                    <span class="red-star">&nbsp;</span>
+                    <label>
+                        <span class="fa fa-mortar-board icon"></span>
+                        <input type="text" name="profess" class="inpeeut" placeholder="请输入专业">
+                    </label>
+                </p>
+            </div>
+
+            <div class="course">
+                <p class="input-wrap">
+                    <span class="red-star">&nbsp;</span>
+                    <label>
+                        <span class="fa fa-book icon"></span>
+                    </label>
+                        <select name="cours[]" id="course" class="sele" multiple>
+                            <option class="pd12" value="0">科目（可按住ctrl或shift进行多选）</option>
+                            <option class="pd12" value="1">语文</option>
+                            <option class="pd12" value="2">数学</option>
+                            <option class="pd12" value="3">外语</option>
+                        </select>
+                </p>
+            </div>
+
+            <div class="repassword">
+                <div id="one">
+
+                <p class="input-wrap">
+                    <span class="red-star">&nbsp;</span>
+                    <label>
+                        <span class="fa fa-cloud icon"></span>
+                        <input type="text" name="tutotype[1][]" class="inpeeut" placeholder="请输入辅导类型一">
+                    </label>
+                </p>
+                <div class="input-wrap">
+                    <span class="red-star">&nbsp;</span>
+                    <label>
+                        <span class="fa fa-money icon"></span>
+                        <input type="text" name="tutotype[1][]" class="inpeeut" placeholder="请输入价格一">
+                    </label>
+                    <span class="fa fa-plus-circle addp" id="addp"></span>
+                </div>
+
+                </div>
+                <div id="two" class="dsn">
+
+                    <p class="input-wrap">
+                        <span class="red-star">&nbsp;</span>
+                        <label>
+                            <span class="fa fa-cloud icon"></span>
+                            <input type="text" name="tutotype[2][]" class="inpeeut" placeholder="请输入辅导类型二">
+                        </label>
+                    </p>
+                    <div class="input-wrap">
+                        <span class="red-star">&nbsp;</span>
+                        <label>
+                            <span class="fa fa-money icon"></span>
+                            <input type="text" name="tutotype[2][]" class="inpeeut" placeholder="请输入价格二">
+                        </label>
+                        <span class="fa fa-minus-circle addp" onclick="hide('two')"></span>
+                    </div>
+
+                </div>
+                <div id="three" class="dsn">
+
+                    <p class="input-wrap">
+                        <span class="red-star">&nbsp;</span>
+                        <label>
+                            <span class="fa fa-cloud icon"></span>
+                            <input type="text" name="tutotype[3][]" class="inpeeut" placeholder="请输入辅导类型三">
+                        </label>
+                    </p>
+                    <div class="input-wrap">
+                        <span class="red-star">&nbsp;</span>
+                        <label>
+                            <span class="fa fa-money icon"></span>
+                            <input type="text" name="tutotype[3][]" class="inpeeut" placeholder="请输入价格三">
+                        </label>
+                        <span class="fa fa-minus-circle addp" onclick="hide('three')"></span>
+                    </div>
+
+                </div>
+                <div id="four" class="dsn">
+
+                    <p class="input-wrap">
+                        <span class="red-star">&nbsp;</span>
+                        <label>
+                            <span class="fa fa-cloud icon"></span>
+                            <input type="text" name="tutotype[4][]" class="inpeeut" placeholder="请输入辅导类型四">
+                        </label>
+                    </p>
+                    <div class="input-wrap">
+                        <span class="red-star">&nbsp;</span>
+                        <label>
+                            <span class="fa fa-money icon"></span>
+                            <input type="text" name="tutotype[4][]" class="inpeeut" placeholder="请输入价格四">
+                        </label>
+                        <span class="fa fa-minus-circle addp" onclick="hide('four')"></span>
+                    </div>
+
+                </div>
+                <div id="five" class="dsn">
+
+                    <p class="input-wrap">
+                        <span class="red-star">&nbsp;</span>
+                        <label>
+                            <span class="fa fa-cloud icon"></span>
+                            <input type="text" name="tutotype[5][]" class="inpeeut" placeholder="请输入辅导类型五">
+                        </label>
+                    </p>
+                    <div class="input-wrap">
+                        <span class="red-star">&nbsp;</span>
+                        <label>
+                            <span class="fa fa-money icon"></span>
+                            <input type="text" name="tutotype[5][]" class="inpeeut" placeholder="请输入价格五">
+                        </label>
+                        <span class="fa fa-minus-circle addp" onclick="hide('five')"></span>
+                    </div>
+
+                </div>
+
+                <p class="input-wrap">
+                    <span class="red-star">&nbsp;</span>
+                    <label>
+                        <span class="fa fa-file-text-o icon"></span>
+                        <input type="text" name="modifynum" class="inpeeut" placeholder="请输入可接受的修改次数">
+                    </label>
+                </p>
+
+                <p class="input-wrap">
+                    <span class="red-star">&nbsp;</span>
+                    <label>
+                        <span class="fa fa-credit-card icon"></span>
+                        <input type="text" name="payaccout" class="inpeeut" placeholder="请输入收款的支付宝账户">
+                    </label>
+                </p>
+
+                <div class="avartar clearfix" style="    padding-left: 32px;padding-bottom: 30px;">
+                    <img src="__PUBLIC__/images/avartar.jpg" width="100px" height="100px" alt="" class="pull-left">
+
+                    <div class="avartar-info pull-left">
+                        <label>
+                            <a href="">选择身份证</a>
+                            <input type="file" name="idcard" class="upfile">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="avartar clearfix" style="    padding-left: 32px;padding-bottom: 30px;margin-top: 0">
+                    <img src="__PUBLIC__/images/avartar.jpg" width="100px" height="100px" alt="" class="pull-left">
+
+                    <div class="avartar-info pull-left">
+                        <label>
+                            <a href="">选择学位证或学生卡</a>
+                            <input type="file" name="degree" class="upfile">
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div>
+                <div id="err"></div>
+                <input class="submit-button tijiao"  id="subbtn" type="button" value="成为老师" />
+            </div>
+        </form>
+        <p class="exit-account"></p>
+    </div>
+</div>
+<script>
+    $("#subbtn").click(function () {
+        user = $("#name").val();
+        email = $("#email").val();
+        pass = $("#pass").val();
+        repass = $("#repass").val();
+        console.log(email);
+        console.log(pass);
+        console.log(repass);
+        if(user == ''){
+            $("#err").text('用户名不能为空');
+            $("#name").focus();
+            return false;
+        }
+        if(email == ''){
+            $("#err").text('邮箱不能为空');
+            $("#email").focus();
+            return false;
+        }
+        em = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+        if(!em.test(email)){
+            $("#err").text('邮箱格式有误');
+            $("#email").focus();
+            return false;
+        }
+        if(pass == '' || pass.length < 6){
+            $("#err").text('密码不能为空且不能小于六位');
+            $("#pass").focus();
+            return false;
+        }
+        if(repass == ''){
+            $("#err").text('确认密码不能为空');
+            $("#repass").focus();
+            return false;
+        }
+        if(pass != repass){
+            $("#err").text('两次密码不相等');
+            $("#repass").focus();
+            return false;
+        }
+
+        $("#err").text('');
+        $("#form").submit();
+    });
+
+    $('.avartar').each(function(){
+        var $this = $(this),
+            btn = $this.find('.upfile'),
+            img = $this.find('img');
+        btn.on('change',function(){
+            var file = $(this)[0].files[0],
+                imgSrc = $(this)[0].value,
+                url = URL.createObjectURL(file);
+            if (!/\.(jpg|jpeg|png|JPG|PNG|JPEG)$/.test(imgSrc)){
+                alert("请上传jpg或png格式的图片！");
+                return false;
+            }else{
+                img.attr('src',url);
+                img.css({'opacity':'1'});
+            }
+        });
+    });
+
+    function hide(obj) {
+        $("#err").text('');
+        $("#"+obj).hide();
+    }
+
+    $("#addp").click(function () {
+        $("#err").text('');
+        if($("#one").is(":hidden")){
+            $("#one").show();
+        }else if($("#two").is(":hidden")){
+            $("#two").show();
+        }else if($("#three").is(":hidden")){
+            $("#three").show();
+        }else if($("#four").is(":hidden")){
+            $("#four").show();
+        }else if($("#five").is(":hidden")){
+            $("#five").show();
+        }else{
+            $("#err").text('辅导类型最多只能添加五组！');
+        }
+
+    });
+</script>
+{include file="public/footer" /}

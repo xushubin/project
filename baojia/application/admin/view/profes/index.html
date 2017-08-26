@@ -1,0 +1,159 @@
+{include file="public/header" /}
+
+
+<div class="nig" style="margin-top:20px;float: left;margin-bottom: 20px;">{$id|name}课程的新增修改</div>
+
+<div style="margin:20px;float: left;">
+    <select onchange="urlch()" class="form-control" id="profe">
+        <option value="0">请选择需要操作的专业</option>
+        {foreach $mag as $v}
+        <option {eq name="v.id" value="$id"} selected {/eq} value="{:url('index',['id'=>$v.id])}">{$v.name}</option>
+        {/foreach}
+    </select>
+</div>
+
+<!--<div style="float: right;margin-top: 20px"><a href="/excel">批量新增课程</a></div>-->
+
+
+<div style="margin-top:20px;">
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>ID</th>
+            <th width="15%">课程编号</th>
+            <th>所属专业名</th>
+            <th width="23%">课程名称</th>
+            <th>课程基数值</th>
+            <th width="18%">课程价格</th>
+            <th>操作</th>
+        </tr>
+        {foreach $msg as $p}
+        <tr>
+            <td>{$p.id}</td>
+
+            <form action="/admin/profes/edit" method="post">
+
+                <td>
+                    <input type="text" class="form-control inp" id="numid{$p.id}" name="numid" value="{$p.numid}" />
+                </td>
+
+                <td>
+                    <select class="form-control" id="profe{$p.id}" name="profe">
+                        <option value="0">请选择</option>
+                        {foreach $mag as $v}
+                        <option {eq name="v.id" value="$p.profe"} selected {/eq} value="{$v.id}">{$v.name}</option>
+                        {/foreach}
+                    </select>
+                </td>
+
+                <td>
+                    <input type="text" id="subject{$p.id}" class="form-control inp" name="subject" value="{$p.subject}" />
+                </td>
+
+                <td>
+                    <input type="text" id="key{$p.id}" class="form-control inp" name="key" value="{$p.key}" />
+                </td>
+
+                <td>
+                    <input type="text" id="price{$p.id}" class="form-control price-inp" name="price" value="{$p.price}" />
+                    <input type="hidden" name="id" value="{$p.id}"/>
+                </td>
+                <td>
+                    <button type="submit" onclick="return check({$p.id})" class="btn btn-primary" >修改</button>
+                    <a href="{:url('del',['id'=>$p.id])}"><button type="button" class="btn btn-danger" >删除</button></a>
+                </td>
+            </form>
+
+        </tr>
+        {/foreach}
+
+        <form action="/admin/profes/add" id="form"  method="post">
+            <tr>
+                <td></td>
+                <td> <input type="text" id="numid" class="form-control inp" name="numid"  placeholder="请输入编号" /></td>
+                <td>
+                    <select class="form-control" id="profe0" name="profe">
+                        <option value="0">请选择专业</option>
+                        {foreach $mag as $v}
+                            <option {eq name="v.id" value="$id"} selected {/eq} value="{$v.id}">{$v.name}</option>
+                        {/foreach}
+                    </select>
+                </td>
+                <td> <input type="text" id="subject" class="form-control inp" name="subject"  placeholder="请输入课程名称" /></td>
+                <td> <input type="text" id="key" class="form-control inp" name="key"  placeholder="请输入课程基数值" /></td>
+                <td> <input type="text" id="price" class="form-control inp" name="price"  placeholder="请输入课程价格" /></td>
+                <td><button type="submit" onclick="return check(0)" class="btn btn-primary" >新增</button></td>
+            </tr>
+
+
+        </form>
+    </table>
+</div>
+
+</div>
+
+<script>
+    function urlch() {
+        console.log($("#profe").val());
+        self.location=$("#profe").val();
+    }
+
+    function check(obj){
+        if(obj == 0){
+            if($("#numid").val() == ''){
+                alert('请输入编号');
+                $("#numid").focus()
+                return false;
+            }
+            if($("#profe0").val() == 0){
+                alert('请选择专业');
+                $("#profe0").focus()
+                return false;
+            }
+            if($("#subject").val() == 0){
+                alert('请输入课程名称');
+                $("#subject").focus()
+                return false;
+            }
+            if($("#key").val() == 0){
+                alert('请输入课程基数值');
+                $("#key").focus()
+                return false;
+            }
+            if($("#price").val() == 0){
+                alert('请输入课程价格');
+                $("#price").focus()
+                return false;
+            }
+        }else{
+            if($("#numid"+obj).val() == ''){
+                alert('请输入编号');
+                $("#numid"+obj).focus()
+                return false;
+            }
+            if($("#profe"+obj).val() == 0){
+                alert('请选择专业');
+                $("#profe"+obj).focus()
+                return false;
+            }
+            if($("#subject"+obj).val() == 0){
+                alert('请输入课程名称');
+                $("#subject"+obj).focus()
+                return false;
+            }
+            if($("#key"+obj).val() == 0){
+                alert('请输入课程基数值');
+                $("#key"+obj).focus()
+                return false;
+            }
+            if($("#price"+obj).val() == 0){
+                alert('请输入课程价格');
+                $("#price"+obj).focus()
+                return false;
+            }
+        }
+    }
+
+</script>
+
+</body>
+</html>

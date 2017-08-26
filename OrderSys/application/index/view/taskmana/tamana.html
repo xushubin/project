@@ -1,0 +1,56 @@
+{include file="public/header" /}
+
+<div id="page-wrapper" class="create-order">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    任务管理 <small>TA管理</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-tasks"></i>   TA管理
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <a href="{:url('addta')}"><button class="tabtn">添加TA</button></a>
+
+        <div class="tama">
+            <table class="table table-bordered admin-table table-hover">
+                <thead>
+                <tr>
+                    <td>TA编号</td>
+                    <td>TA姓名</td>
+                    <td>类别</td>
+                    <td>毕业院校</td>
+                    <td>专业</td>
+                    <td>擅长科目</td>
+                    <td>联系方式1</td>
+                    <td>联系方式2</td>
+                    <td>操作</td>
+                </tr>
+                </thead>
+                <tbody>
+                {foreach name="msg" item="p"}
+                <tr>
+                    <td>{$p.id}</td>
+                    <td>{$p.name}</td>
+                    <td>{$p.class|qzjz}</td>
+                    <td>{$p.college}</td>
+                    <td>{$p.profess}</td>
+                    <td>{$p.course}</td>
+                    <td>{$p.tel1}</td>
+                    <td>{$p.tel2}</td>
+                    <td width="15%"> <a href="{:url('addta','id='.$p['id'])}"><button class="tabtn">编辑</button></a>
+                        <a href="{:url('delta','id='.$p['id'])}" onclick="return confirm('确定要删除么');"><button class="tabtn">删除</button></a></td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{include file="public/footer" /}

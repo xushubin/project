@@ -1,0 +1,95 @@
+{include file="public/header" /}
+<div id="page-wrapper" class="admin">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    权限管理 <small>权限管理</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-user"></i> 权限管理
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-striped admin-table table-hover">
+                    <thead>
+                    <tr>
+                        <td>#</td>
+                        <td>用户名</td>
+                        <td>密码</td>
+                        <td>权限组</td>
+                        <td>操作</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach name="msg" item="p"}
+                    <tr>
+                        <form action="{:url('editpass')}" method="post">
+                            <td>{$p.id}</td>
+                            <td>{$p.name}</td>
+                            <td class="td-pass" id="td{$p.id}"><span>******</span>
+                                <div class="form-group password-wrap col-lg-6">
+                                    <input type="password" name="pass" placeholder="请输入密码"class="password form-control">
+                                </div>
+                            </td>
+                            <td>{$p.class|clas}</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary edit" id="{$p.id}">编辑密码</button>
+                                <input type="hidden" name="id" value="{$p.id}">
+                                <button type="submit" id="con{$p.id}" class="btn btn-sm btn-primary confirm">确定密码</button>
+                            </td>
+                        </form>
+                    </tr>
+                    {/foreach}
+
+                    <tr>
+                        <form action="{:url('addmana')}" method="post">
+                            <td></td>
+                            <td>
+                                <div class="form-group col-lg-6 no-padding">
+                                    <input type="text" name="name" class="form-control" placeholder="请输入用户名">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group col-lg-6 no-padding">
+                                    <input type="password" name="pass" class="form-control" placeholder="请输入密码">
+                                </div>
+                            </td>
+                            <td>
+                                <select name="class" class="form-control">
+                                    <option value="0">请选择权限组</option>
+                                    <option value="1">销售人员组</option>
+                                    <option value="2">任务管理组</option>
+                                    <option value="3">财务人员组</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-sm btn-primary add">添加用户</button>
+
+                            </td>
+                        </form>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(".edit").click(function() {
+        id = $(this).attr('id');
+        $("#td"+id).find("span").hide();
+        $("#td"+id).find(".password-wrap").show();
+        $(this).hide();
+        $("#con"+id).show();
+        return false;
+    })
+</script>
+{include file="public/footer" /}

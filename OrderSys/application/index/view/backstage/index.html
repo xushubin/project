@@ -1,0 +1,202 @@
+{include file="public/header" /}
+            <!-- 侧边栏 -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li class="active">
+                        <a href="index.html"><i class="fa fa-fw fa-edit"></i> 任务创建</a>
+                    </li>
+                    <li>
+                        <a href="charts.html"><i class="fa fa-fw fa-money"></i> 尾款管理</a>
+                    </li>
+                    <li>
+                        <a href="tables.html"><i class="fa fa-fw fa-users"></i> 用户管理</a>
+                    </li>
+                    <li>
+                        <a href="forms.html"><i class="fa fa-fw fa-tasks"></i> 任务管理</a>
+                    </li>
+                    <li>
+                        <a href="bootstrap-elements.html"><i class="fa fa-fw fa-dollar"></i> 财务管理</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div id="page-wrapper" class="default-page">
+            <div class="container-fluid">
+                <!-- 页面头部 -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            仪表盘 <small>概览</small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li class="active">
+                                <i class="fa fa-dashboard"></i> 仪表盘
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="row">
+                    {notin name="class" value="2,4"}
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-edit fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <p class="default-title">任务创建</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{:url('taskcreate/index')}">
+                                <div class="panel-footer">
+                                    <span class="pull-left">详情</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-money fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <p class="default-title">尾款管理</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{:url('tamomana/index')}">
+                                <div class="panel-footer">
+                                    <span class="pull-left">详情</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-users fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <p class="default-title">用户管理</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{:url('usermana/index')}">
+                                <div class="panel-footer">
+                                    <span class="pull-left">详情</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    {/notin}
+                    {neq name="class" value="1"}
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-tasks fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div>任务管理</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{:url('taskmana/index')}">
+                                <div class="panel-footer">
+                                    <span class="pull-left">详情</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    {/neq}
+                    {eq name="class" value="3"}
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-dollar fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div>财务管理</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{:url('finamana/index')}">
+                                <div class="panel-footer">
+                                    <span class="pull-left">详情</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    {/eq}
+
+                    {eq name="class" value="0"}
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-dollar fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div>财务管理</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{:url('finamana/index')}">
+                                <div class="panel-footer">
+                                    <span class="pull-left">详情</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-lock fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <p class="default-title">权限管理</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{:url('authmana/index')}">
+                                <div class="panel-footer">
+                                    <span class="pull-left">详情</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    {/eq}
+                </div>
+            </div>
+        </div>
+{include file="public/footer" /}

@@ -1,0 +1,45 @@
+{include file="public/public" /}
+
+<div class="cla">
+    <form action="/index/index/addthree" id="form" method="post">
+
+        <div class="form-group">
+            <label class="fs20">请输入描述评估</label>
+            <span>(至少选择一项)</span>
+            <div class="form-inline">
+                {foreach $duct as $p}
+                <div style="margin-bottom: 10px;" >
+                    <label for="{$p.id}" style="width: 8%;"> {$p.name}</label>
+                    <input type="text" class=" form-control xu" name="assess{$p.id}" value="0 " style="width: 85%;" id="{$p.id}" >
+                </div>
+                {/foreach}
+            </div>
+        </div>
+
+
+        <div style="clear: both; clear: both;padding-top: 1%;width: 20%;margin: 0 auto;">
+            <input type="hidden" name="id" value="{$id}"/>
+            <a href="javascript:history.go(-1);"><button type="button"class="btn btn-primary" style="width: 44%;padding: 2%;">返回</button></a>
+            <button type="button" onclick="submiit()" class="btn btn-primary" style="width: 44%;padding: 2%;">确定</button>
+        </div>
+    </form>
+</div>
+
+<script>
+
+    function submiit(){
+        i=0;
+        $(".xu").each(function(){
+            if($(this).val() != 0){
+                i++;
+            }
+        });
+
+        if(i == 0){
+            alert('请至少填写一项描述评估');
+            return false;
+        }
+
+        $("#form").submit();
+    }
+</script>

@@ -1,0 +1,93 @@
+﻿{include file="public/header" /}
+        <div id="page-wrapper" class="tailstatus">
+            <div class="container-fluid">
+                <!-- 页面头部 -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            财务管理 <small>尾款详情</small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li class="active">
+                                <i class="fa fa-dollar"></i> 尾款详情
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-success " role="alert">
+                            
+                            <p class="statustitle">
+                                <strong>任务编号:</strong><span>{$or.orderid}</span>
+                                <strong>任务标题:</strong><span>{$or.tasktitle}</span>
+                                <strong>付款状态:</strong><span>{$or.paystatus}</span>
+                                <strong>用户编号:</strong><span>{$or.userid}</span>
+                                <strong>实付总价:</strong><span>{$or.shitotal}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table class="table table-bordered task-table">
+                            <thead>
+                                <tr>
+                                    <td>尾款</td>
+                                    <td>尾款日期</td>
+                                    <td>付款截屏1</td>
+                                    <td>付款截屏2</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {foreach $pay as $v}
+                                <tr>
+                                    <td>{$v.paymoney}</td>
+                                    <td>{$v.lastdate}</td>
+                                    <td class="pic" data-toggle="modal" data-target="#imgModal" data-src="{$v.payimg0}" data-title="付款截屏1">点击查看</td>
+                                    <td class="pic" data-toggle="modal" data-target="#imgModal" data-src="{$v.payimg1}" data-title="付款截屏2">点击查看</td>
+                                </tr>
+                            {/foreach}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="imgModal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <img id="src" src="" class="imgsrc" onerror="this.style.display='none'" style="display: none;" style="width:100%;">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <script>
+    $(function() {
+
+        $('#imgModal').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('title') // Extract info from data-* attributes
+            var src = button.data('src') // Extract info from data-* attributes
+            console.log(src);
+            var modal = $(this)
+            modal.find('.modal-title').text(recipient)
+            if (src == "") {
+                modal.find('#src').hide();
+            } else {
+                modal.find('#src').attr('src', '/public/uploads/' + src);
+                modal.find('#src').show();
+            }
+        })
+    })
+    </script>
+{include file="public/header" /}

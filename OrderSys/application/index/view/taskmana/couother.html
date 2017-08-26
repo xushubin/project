@@ -1,0 +1,164 @@
+{include file="public/header" /}
+<div id="page-wrapper" class="user-management">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    任务管理 <small>拆课表</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-user"></i> 拆课表
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <ul id="myTabs" class="nav nav-tabs" role="tablist">
+            <li role="presentation"><a href="{:url('coudetal','id='.$msg['id'])}" >课程详情</a></li>
+            <li role="presentation" class=""><a href="{:url('disconnect','id='.$msg['id'])}" >拆课表</a></li>
+            <li role="presentation" class="active"><a href="{:url('couother','id='.$msg['id'])}" >学期奖详情</a></li>
+            <li role="presentation" class=""><a href="{:url('coulog','id='.$msg['id'])}" >课程日志</a></li>
+        </ul>
+        <div class="row">
+                    <div class="col-lg-12 bill-order" id="chai">
+                        <table class="table table-bordered table-hover">
+
+                            <tr>
+                                <td colspan="5" style="text-align: center">学期奖记录</td>
+                            </tr>
+                            <tr>
+                                <td>日期</td>
+                                <td>成绩</td>
+                                <td>奖惩金额</td>
+                                <td>备注信息</td>
+                                <td>操作</td>
+                            </tr>
+                    {foreach $ter as $k=>$v}
+                    <form id="form{$k}" method="post" action="{:url('xueqi')}">
+                    <tr>
+                        <td>{$v.date}<input type="hidden" name="date" value="{$v.date}"></td>
+                        <td>
+                            <select name="level" id="level{$k}" class="form-control">
+                                <option {eq name="v.level" value="0"} selected {/eq}value="0">请选择等级</option>
+                                <option {eq name="v.level" value="A+"} selected {/eq}>A+</option>
+                                <option {eq name="v.level" value="A"} selected {/eq}>A</option>
+                                <option {eq name="v.level" value="A-"} selected {/eq}>A-</option>
+                                <option {eq name="v.level" value="B+"} selected {/eq}>B+</option>
+                                <option {eq name="v.level" value="B"} selected {/eq}>B</option>
+                                <option {eq name="v.level" value="B-"} selected {/eq}>B-</option>
+                                <option {eq name="v.level" value="C+"} selected {/eq}>C+</option>
+                                <option {eq name="v.level" value="C"} selected {/eq}>C</option>
+                                <option {eq name="v.level" value="C-"} selected {/eq}>C-</option>
+                                <option {eq name="v.level" value="D+"} selected {/eq}>D+</option>
+                                <option {eq name="v.level" value="D"} selected {/eq}>D</option>
+                                <option {eq name="v.level" value="D-"} selected {/eq}>D-</option>
+                                <option {eq name="v.level" value="D以下"} selected {/eq}>D以下</option>
+                            </select>
+                        </td>
+                        <td><input name="jine" type="text" id="jine{$k}" value="{$v.jine}" class="form-control"></td>
+                        <td><input name="remark" type="text" id="remark{$k}" value="{$v.remark}" class="form-control">
+                            <input name="id" type="hidden" value="{$v.id}"><input name="cid" type="hidden" value="{$msg.id}"></td>
+                        <td>{eq name="v.level" value="0"}
+                            <input onclick="check('{$k}')" type="button" class="tabtn" value="提交">{/eq}
+                        </td>
+                    </tr></form>
+                    {/foreach}
+                    <form id="form10" method="post" action="{:url('xueqi')}">
+                    <tr>
+                        <td>最终成绩</td>
+                        <td>
+                            <select name="level" id="level10" class="form-control">
+                                <option {eq name="final.level" value="0"} selected {/eq}value="0">请选择等级</option>
+                                <option {eq name="final.level" value="A+"} selected {/eq}>A+</option>
+                                <option {eq name="final.level" value="A"} selected {/eq}>A</option>
+                                <option {eq name="final.level" value="A-"} selected {/eq}>A-</option>
+                                <option {eq name="final.level" value="B+"} selected {/eq}>B+</option>
+                                <option {eq name="final.level" value="B"} selected {/eq}>B</option>
+                                <option {eq name="final.level" value="B-"} selected {/eq}>B-</option>
+                                <option {eq name="final.level" value="C+"} selected {/eq}>C+</option>
+                                <option {eq name="final.level" value="C"} selected {/eq}>C</option>
+                                <option {eq name="final.level" value="C-"} selected {/eq}>C-</option>
+                                <option {eq name="final.level" value="D+"} selected {/eq}>D+</option>
+                                <option {eq name="final.level" value="D"} selected {/eq}>D</option>
+                                <option {eq name="final.level" value="D-"} selected {/eq}>D-</option>
+                                <option {eq name="final.level" value="D以下"} selected {/eq}>D以下</option>
+                            </select>
+                        </td>
+                        <td><input name="jine" type="text" id="jine10" value="{$final.jine}" class="form-control"></td>
+                        <td><input name="remark" type="text" class="form-control" id="remark10" value="{$final.remark}"></td>
+                        <td>{eq name="final.level" value="0"}
+                            <input onclick="check(10)" type="button" class="tabtn" value="提交">
+                            {/eq}
+                            <input name="cid" type="hidden" value="{$msg.id}">
+                            <input name="id" type="hidden" value="{$final.id}"></td>
+                    </tr>
+                    </form>
+                    <script>
+                        function check(obj) {
+                            level = $("#level"+obj).val();
+                            if(level == 0){
+                                alert('请选择等级！');
+                                $("#level"+obj).focus();
+                                return false;
+                            }
+
+                            $("#form"+obj).submit();
+                        }
+                    </script>
+                    <tr>
+                        <td colspan="5">&nbsp;<a href="{:url('xuedao','id='.$msg['id'])}"><button type="button" class="tabtn">学期奖导出</button></a></td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" style="text-align: center">绩效点调节</td>
+                    </tr>
+                    <tr>
+                        <td>基础绩效点</td>
+                        <td>绩效点增减</td>
+                        <td>最终绩效点</td>
+                        <td>备注</td>
+                        <td>操作</td>
+                    </tr>
+                    {eq name="isji" value="1"}
+                    <form action="{:url('regulate')}" method="post">
+                    <tr>
+                        <td>{$jidian.lastid}<input type="hidden" name="ta" value="{$msg.ta}">
+                            <input type="hidden" id="jichu" name="jichu" value="{$jidian.lastid}"></td>
+                        <td><input name="jidian" id="jidian" placeholder="请输入类似于 10  -10 这样的绩点量" class="form-control"></td>
+                        <td><span id="ji">{$jidian.lastid}</span><input type="hidden" name="cid" value="{$msg.id}">
+                            <input type="hidden" id="cid" name="final" value="{$jidian.lastid}"></td>
+                        <td><input name="remark" class="form-control" placeholder="请输入备注"></td>
+                        <td colspan="4"><input type="submit" class="tabtn"></td>
+                    </tr>
+
+                    </form>
+                    {else/}
+                    <tr>
+                        <td>{$reg.jichu}</td>
+                        <td>{$reg.jidian}</td>
+                        <td>{$reg.final}</td>
+                        <td>{$reg.remark}</td>
+                        <td></td>
+                    </tr>
+                    {/eq}
+                </table>
+                <script>
+                    $("#jidian").keyup(function () {
+                        val = $(this).val();
+                        fi = $("#cid").val();
+                        jid = $("#jichu").val();
+                        if(val > 10 || val < -10){
+                            alert('请输入正确的绩点数');
+                        }else if(val != ''){
+                            f = parseInt(jid) + parseInt(val);
+                            console.log(f);
+                            $("#ji").text(f);
+                            $("#cid").val(f);
+                        }
+                    })
+                </script>
+            </div>
+        </div>
+
+    </div>
+</div>

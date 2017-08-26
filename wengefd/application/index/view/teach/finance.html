@@ -1,0 +1,41 @@
+{include file="public/header" /}
+
+<div class="cw">
+<div style="    height: 170px;">
+    <div class="cwdle">
+        <img src="__UPLOAD__/{$te.avatar}" />
+        <div class="cwti" style="width: 50%;">{$te.name} <span style="    font-size: 14px;">( ID:{$te.id} )</span></div>
+        <div class="cwti"><span style="font-size: 14px">账户余额：{$te.allmoney|two}$</span>
+            <!--<button class="cwbtn">提现</button>-->
+        </div>
+    </div>
+    <div class="cwdri">
+        <div class="cwmsg">本月收入：<span>{$te.monthmon|two}$</span></div>
+        <div class="cwmsg">总成交量：<span>{$te.tasknum}<small>个</small></span></div>
+        <div class="cwmsg">未完成：<span>{$we}<small>个</small></span></div>
+        <div class="cwmsg">辅导数量：<span>{$te.studnum}<small>个</small></span></div>
+        <div class="cwbud"><a href="{:url('teach/inde')}"><button class="bbcw">查看任务列表</button></a></div>
+    </div>
+</div>
+
+<div class="cwxia">
+    <table width="100%">
+        <tr style="background: #F0F0F0">
+            <th>编号</th>
+            <th>任务名称</th>
+            <th>订单时间</th>
+            <th>订单总额</th>
+            <th>平台手续费</th>
+            <th>实际金额</th>
+            <th>发放状态</th>
+            <th>发放时间</th>
+        </tr>
+        <tr>
+            <td colspan="8"><img width="100%;" src="__PUBLIC__images/cw.jpg"></td>
+        </tr>
+    </table>
+</div>
+
+</div>
+
+{include file="public/footer" /}

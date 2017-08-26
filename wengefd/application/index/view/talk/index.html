@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+<head>
+    <meta charset="utf-8">
+    <title>聊天标题</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/widget/css/RongIMWidget.min.css"/>
+    <script src="__PUBLIC__widget/jquery-1.11.1.min.js"></script>
+    <style>
+        #sel{
+            padding: 1%;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body ng-controller="main">
+<select id="sel">
+    <option value="0">请选择需要聊天的人员</option>
+    {foreach name="temp" item="val"}
+    <option value="{$val.0}">{$val.1}</option>
+    {/foreach}
+</select>
+<input id="id" type="hidden" value="{$chat.id}">
+<input id="name" type="hidden" value="{$chat.name}">
+<input id="class" type="hidden" value="{$Think.session.class}">
+<div style="margin-top: 2%">
+    <rong-widget></rong-widget>
+</div>
+</body>
+<script src="__PUBLIC__widget/angular.js"></script>
+<script src="__PUBLIC__widget/RongIMWidget.js"></script>
+<script type="text/javascript">
+
+    var demo = angular.module("demo", ["RongWebIMWidget"]);
+
+    demo.controller("main", ["$scope","WebIMWidget", "$http", function($scope,WebIMWidget,$http) {
+
+        $scope.server = WebIMWidget;
+        $scope.targetType=1;
+        tar = $("#id").val();
+        name = $("#name").val();
+
+        onload=function(){
+            setTimeout(go, 1);
+        };
+
+        function go(){
+            WebIMWidget.setConversation(Number($scope.targetType), tar, name);
+        }
+
+        $("#sel").change(function () {
+            id = $("#sel").val();
+            tname = $("#sel").find('option:selected').text();
+            if(id != 0){
+                WebIMWidget.setConversation(Number($scope.targetType), id, tname);
+            }
+        });
+
+        WebIMWidget.init({
+            appkey: "e0x9wycfehtjq",
+            token: "{$token}",
+            style:{
+                width:600,
+                positionFixed:true,
+                bottom:0,
+                left:0,
+                height:600
+            },
+            displayConversationList:true,
+            conversationListPosition:WebIMWidget.EnumConversationListPosition.left,
+            hiddenConversations:[{type:WebIMWidget.EnumConversationType.PRIVATE,id:''}],
+
+        });
+
+        WebIMWidget.setUserInfoProvider(function(targetId,obj){
+            $http({
+                url:"{:url('userinfo')}",
+                params:{
+                    'id':targetId,
+                }
+            }).success(function(rep){
+                obj.onSuccess({id:rep.id,name:rep.name,portraitUri:"http://{$url}/public/uploads/"+rep.avatar});
+            })
+        });
+
+        WebIMWidget.show();
+    }]);
+
+</script>
+
+</html>

@@ -1,0 +1,30 @@
+{include file="public/header" /}
+
+<div style="    padding: 4% 0;width: 1200px;margin: 0 auto;">
+    <div style="float: left"><iframe scrolling="0" width="800px" height="650px" src="{:url('talk/index','id='.$id)}"></iframe></div>
+
+    <div style="margin: 8px;float: left">
+        <div>
+            <select id="sel" class="tasel">
+                <option value="0">请选择需要查看聊天记录的人员</option>
+                {foreach name="temp" item="val"}
+                <option value="{$val.0}">{$val.1}</option>
+                {/foreach}
+            </select>
+        </div>
+    <div><iframe id="ifr" scrolling="0" width="350px" height="600px" src="{:url('talk/histro')}"></iframe></div>
+    </div>
+</div>
+
+<script>
+    $("#sel").change(function () {
+        id = $(this).val();
+        src = $("#ifr").attr('src');
+        msg = src.split('?');
+
+        src = msg[0]+'?id='+id;
+        $("#ifr").attr('src',src);
+        console.log(src);
+    });
+</script>
+{include file="public/footer" /}

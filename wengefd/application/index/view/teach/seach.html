@@ -1,0 +1,93 @@
+{include file="public/header" /}
+	<div class="recommend-content">
+		<div class="recommend-banner"></div>
+		<div class="recommend-wrap">
+			<p class="notification"> >>已为你找到了<span>{$cou}</span>位辅导老师</p>
+			<p class="sort">
+				<a href="{:url('sort','s=1&course='.$post['course'].'&tutoty='.$post['tutoty'].'&tid='.$tid)}" {eq name="s" value="1"}class="sort-price"{/eq} >按照价格排序</a>
+				<a href="{:url('sort','s=2&course='.$post['course'].'&tutoty='.$post['tutoty'].'&tid='.$tid)}" {eq name="s" value="2"}class="sort-price"{/eq}>按照评价排序</a>
+			</p>
+
+			<ul class="recommend-list">
+                {foreach $msg as $v}
+                <a href="{:url('commun','id='.$tid.'&teid='.$v.id)}">
+				<li class="clearfix">
+					<span class="recommend-avartar"><img width="150px" height="150px" src="__UPLOAD__/{$v.avatar}" alt=""></span>
+					<span class="teacher-info">
+						<span class="teacher-name">
+							{$v.name}
+						</span>
+						<span class="teacher-icon">
+							<span class="identity">身份认证</span>
+						<span class="education-background">学历认证</span>
+						</span>
+						<span class="edu-school">
+							<span class="university">{$v.college}</span>
+							<span class="profession">{$v.profess}</span>
+						</span>
+
+					</span>
+					<span class="task-info">
+							<span class="tasks">已完成{$v.tasknum}项任务</span>
+							<span class="students">已辅导{$v.studnum}位同学</span>
+							<span class="quality">辅导质量：{$v.levscor}分
+                            {if condition="$v.levscor > 4"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {elseif condition="$v.levscor > 3"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {elseif condition="$v.levscor > 2"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {elseif condition="$v.levscor > 1"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {else/}
+                                <i class="fa fa-star"></i>
+                            {/if}
+                            </span>
+							<!--<span class="sort-teacher">排名所有老师 <span class="blue">前20%</span></span>-->
+							<span class="quality">守时评分：{$v.tiscor}分
+                                {if condition="$v.tiscor > 4"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {elseif condition="$v.tiscor > 3"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {elseif condition="$v.tiscor > 2"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {elseif condition="$v.tiscor > 1"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {else/}
+                                <i class="fa fa-star"></i>
+                            {/if}
+                           </span>
+							<!--<span class="sort-teacher">排名所有老师 <span class="blue">前20%</span></span>-->
+					</span>
+					<span class="edit-info">
+						<span class="edit">可修改<i class="big">{$v.modifynum}</i>次</span>
+						<span class="money">每页<i class="big">{$v.price}</i>$</span>
+					</span>
+				</li>
+                </a>
+                {/foreach}
+
+			</ul>
+		</div>
+	</div>
+{include file="public/footer" /}

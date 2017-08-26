@@ -1,0 +1,209 @@
+{include file="public/header" /}
+<div id="page-wrapper" class="user-management">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    任务管理 <small>课程详情</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-user"></i> 课程详情
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <ul id="myTabs" class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="{:url('coudetal','id='.$msg['id'])}" >课程详情</a></li>
+            <li role="presentation" class=""><a href="{:url('disconnect','id='.$msg['id'])}" >拆课表</a></li>
+            <li role="presentation" class=""><a href="{:url('couother','id='.$msg['id'])}" >学期奖详情</a></li>
+            <li role="presentation" class=""><a href="{:url('coulog','id='.$msg['id'])}" >课程日志</a></li>
+        </ul>
+        <div class="row">
+            <div class="col-lg-12 bill-order">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <td width="15%">内部编号</td>
+                        <td width="18%">{$msg.couid}</td>
+                        <td width="15%">课号</td>
+                        <td width="18%">{$msg.course}</td>
+                        <td width="15%">课程名称</td>
+                        <td>{$msg.tasktitle}</td>
+                    </tr>
+                    <tr>
+                        <td width="15%">销售备注</td>
+                        <td>{$msg.remark}</td>
+                        <td width="15%">网址</td>
+                        <td>{$msg.course}</td>
+                        <td width="15%">任务级别</td>
+                        <td>{$msg.tasklevel}</td>
+                    </tr>
+                    <form action="{:url('editcou')}" method="post" id="form" enctype="multipart/form-data">
+                    <tr>
+                        <td width="15%">用户名</td>
+                        <td>{$msg.uruser}</td>
+                        <td width="15%">密码</td>
+                        <td>{$msg.urpass}</td>
+                        <td width="15%">时长（周）</td>
+                        <td><select id="length" name="length" onchange="cha(0)" class="form-control">
+                            <option value="0">请选择时长</option>
+                            {for start="1" end="53"}
+                            <option {eq name="msg.length" value="$i"} selected{/eq}>{$i}</option>
+                            {/for}
+                        </select></td>
+                    </tr>
+                    {eq name="flag" value="0"}
+                    <tr>
+                        <td width="15%">开始日期</td>
+                        <td><input type="text" id="time1" name="startdate" class="form-control"></td>
+                        <td width="15%">结束日期</td>
+                        <td><input type="text" id="time2" name="enddate" class="form-control"></td>
+                        <td width="15%">TA人员选择</td>
+                        <td><select id="ta" name="ta" class="form-control">
+                            <option value="0">请选择TA人员</option>
+                            {foreach $tas as $v}
+                            <option value="{$v.id}">{$v.name}</option>
+                            {/foreach}
+                        </select></td>
+                    </tr>
+
+                    <tr>
+                        <td width="15%">上传资料1</td>
+                        <td><input type="file" name="file[]" class="form-control"></td>
+                        <td width="15%">上传资料2</td>
+                        <td><input type="file" name="file[]" class="form-control"></td>
+                        <td width="15%">上传资料3</td>
+                        <td><input type="file" name="file[]" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="button" id="coubtn" class="tabtn" value="提交"></td>
+                        <td colspan="5"><input name="id" type="hidden" value="{$msg['id']}"></td>
+                    </tr><script>
+                        $("#time1").jeDate({
+                            isinitVal:true,
+                            ishmsVal:true,
+                            minDate: '2016-06-16',
+                            format:"YYYY-MM-DD",
+                            zIndex:3000,
+                            choosefun:function (val) {
+                                cha(val);
+                            }
+                        })
+
+                        $("#time2").jeDate({
+                            isinitVal:true,
+                            ishmsVal:true,
+                            minDate: '2016-06-16',
+                            format:"YYYY-MM-DD",
+                            zIndex:3000,
+                        })
+
+                        $("#coubtn").click(function () {
+                            leng = $("#length").val();
+                            ta = $("#ta").val();
+                            if(leng == 0){
+                                alert('请选择时长！');
+                                return false;
+                            }
+                            if(ta == 0){
+                                alert('请选择TA人员！');
+                                return false;
+                            }
+                            $("#form").submit();
+                        });
+                        
+                        function cha(obj) {
+                            len = $("#length").val();
+                            time1 = $("#time1").val();
+                            if(len != 0){
+                                l = len*7*24*3600;
+                                t = Date.parse(new Date(time1))/1000;
+                                tt = t+l;
+                                var now = new Date(tt * 1000);
+                                var yy = now.getFullYear();      //年
+                                var mm = now.getMonth() + 1;     //月
+                                var dd = now.getDate();          //日
+                                var clock = yy + "-";
+                                if(mm < 10) clock += "0";
+                                clock += mm + "-";
+                                if(dd < 10) clock += "0";
+                                clock += dd;
+                                $("#time2").val(clock);
+                            }
+                        }
+                    </script>
+                    {else /}
+
+                    <tr>
+                        <td width="15%">开始日期</td>
+                        <td>{$msg.startdate}</td>
+                        <td width="15%">结束日期</td>
+                        <td>{$msg.enddate}</td>
+                        <td width="15%">当前TA人员</td>
+                        <td>{$msg.ta}</td>
+                    </tr>
+                    <tr>
+                        <td width="15%">上传资料</td>
+                        <td colspan="4">
+                            {foreach $msg['file'] as $v}
+                               <a href="UPLOADS/{$v}">&nbsp;&nbsp;{$v}&nbsp;&nbsp;  </a>
+                            {/foreach}
+                        </td>
+                        <td><input type="submit" id="coubtn" class="tabtn" value="提交">
+                            <a href="{:url('editta','cl=2&id='.$msg['id'])}"><input type="button" class="tabtn" value="整课换TA"></a>
+                        <input name="id" type="hidden" value="{$msg.id}"></td>
+                    </tr>
+                    {/eq}
+
+                    </form>
+                    <tr><td colspan="6" style="text-align: center">绩点详情</td></tr>
+                    <tr>
+                        <td>月份</td>
+                        <td>当前TA</td>
+                        <td>绩点</td>
+                        <td>选择TA（如果更换过TA的话）</td>
+                        <td>之前TA绩点</td>
+                        <td>操作</td>
+                    </tr>
+                    {foreach $ter as $k=>$v}
+                        <tr>
+                            <form method="post" action="{:url('dojidian')}">
+                            <td>{$v.date}</td>
+                            <td>{$v.ta}</td>
+                            <td><input class="form-control" name="jidian" value="{$v.jidian}"></td>
+                            <td><select name="lata" id="lata{$k}" class="form-control" onchange="msg({$k})">
+                                <option value="0">请选择之前的TA</option>
+                                {foreach $tas as $p}
+                                    <option value="{$p.id}">{$p.name}</option>
+                                {/foreach}
+                            </select></td>
+                            <td><input class="form-control" id="laji{$k}" readonly name="laji" value="{$v.laji}"></td>
+                            <td>
+                                {eq name="v.fl" value="0"}
+                                <input type="submit" class="tabtn">
+                                <input type="hidden" name="id" value="{$v.id}">
+                                <input type="hidden" name="cid" value="{$msg.id}">
+                                {/eq}
+                            </td>
+                            </form>
+                        </tr>
+                    {/foreach}
+                </table>
+<script>
+    function msg(obj) {
+        val = $("#lata"+obj).val();
+        console.log(val);
+        if(val != 0){
+            $("#laji"+obj).removeAttr('readonly');
+        }else{
+            $("#laji"+obj).attr('readonly','readonly');
+        }
+    }
+</script>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="public/footer" /}

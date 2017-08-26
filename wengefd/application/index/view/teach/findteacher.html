@@ -1,0 +1,149 @@
+{include file="public/header" /}
+    <div class="findteacher-content">
+        <div class="find-banner"></div>
+        <div class="find-wrap">
+            {neq name="id" value="0"}
+            <form action="{:url('students/seach','id='.$id)}" method="post"  id="form" enctype="multipart/form-data">
+            {else /}
+            <form action="{:url('seach')}" method="post"  id="form" enctype="multipart/form-data">
+            {/neq}
+            <div class="one">
+                <img src="__PUBLIC__/images/one.jpg" alt="">
+            </div>
+            <div class="clearfix one-wrap">
+                <img src="__PUBLIC__/images/arrow.png" alt="" class="pull-left arrow">
+                <div class="pull-left one-content">
+                    <div class="inner-content">
+                        <p class="choice">我要在
+                            <select name="zone" id="zone" style="margin-right: 20px">
+                                <option value="0">请选择时区</option>
+                                <option value="1">东部时间</option>
+                                <option value="2">山地时间</option>
+                                <option value="3">西部时间</option>
+                                <option value="4">中部时间</option>
+                                <option value="5">北京时间</option>
+                            </select>的
+                            <input name="deadtime" type="text" class="time" id="datainp">
+                        </p>
+                        <p class="choice">
+                            完成
+                            <select style="margin-left: 38px;margin-top: 10px;" name="tutoty" id="sele">
+                                <option value="0">请选择辅导类型</option>
+                                {eq name="id" value="0"}
+                                <option>exam</option>
+                                <option>homework</option>
+                                <option>paper</option>
+                                {else /}
+                                {foreach $tutoty as $v}
+                                    <option>{$v}</option>
+                                {/foreach}
+                                {/eq}
+                            </select>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="two">
+                <img src="__PUBLIC__/images/two.jpg" alt="">
+            </div>
+            <div class="clearfix two-wrap">
+                <img src="__PUBLIC__/images/arrow.png" alt="" class="arrow pull-left">
+                <div class="pull-left two-content">
+                    <div class="inner-content">
+                        <p class="choice">我要
+                            <select name="course" id="course">
+                                <option value="0">请选择科目</option>
+                                {eq name="id" value="0"}
+                                <option value="1">语文</option>
+                                <option value="2">数学</option>
+                                <option value="3">外语</option>
+                                {else /}
+                                {foreach name="course" item="v" key="k"}
+                                <option value="{$k}">{$v}</option>
+                                {/foreach}
+                                {/eq}
+                            </select>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="three">
+                <img src="__PUBLIC__/images/three.jpg" alt="">
+            </div>
+            <div class="clearfix three-wrap">
+                <div class="pull-left three-content">
+                    <div class="inner-content avartar-info">
+                        <label for="file" class="">
+                            <a class="upfile">请选择文件(可上传多个)</a>(超过2M的文件不能上传)
+                            <input id="file" type="file" style="opacity: 0" name="files[]" multiple="multiple" placeholder="请选择文件(可上传多个)">
+                        </label>
+                    </div>
+                </div>
+            </div>
+                <div id="err"></div>
+            <button class="confirm" id="conf" type="button">点击确认</button>
+            </form>
+        </div>
+    </div>
+<script type="text/javascript">
+    jeDate({
+        dateCell:"#datainp",
+        format:"YYYY年MM月DD日",
+        isinitVal:true,
+        ishmsVal:false,
+        minDate:"2016-09-19"
+        //okfun:function(val){alert(val)}
+    });
+
+    $("#file").change(function(){
+        var file = $('#file').get(0).files;
+        for(i=0;i<file.length;i++){
+            size = file[i].size;
+            fileSize = (Math.round(size * 100 / 1024) / 100).toString();
+            if(fileSize > 2048){
+                $("#err").text('所选文件过大，超过两M的文件不能上传');
+                $("#conf").attr('disabled','disabled');
+            }else{
+                $("#err").text('');
+                $("#conf").removeAttr('disabled');
+            }
+        }
+
+    });
+
+
+    $("#conf").click(function () {
+        zone = $("#zone").val();
+        datainp = $("#datainp").val();
+        sele = $("#sele").val();
+        course = $("#course").val();
+        console.log(zone);
+        console.log(datainp);
+        console.log(sele);
+        console.log(course);
+        if(zone == 0){
+            $("#err").text('请选择时区');
+            return false;
+        }
+
+        if(datainp == ''){
+            $("#err").text('你选择截止时间');
+            return false;
+        }
+
+        if(sele == 0){
+            $("#err").text('请选择辅导类型');
+            return false;
+        }
+
+        if(course == 0){
+            $("#err").text('请选择科目');
+            return false;
+        }
+        $("#err").text('');
+        $("#form").submit();
+
+    });
+
+</script>
+    {include file="public/footer" /}

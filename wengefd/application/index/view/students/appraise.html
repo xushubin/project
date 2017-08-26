@@ -1,0 +1,173 @@
+{include file="public/header" /}
+<div class="findteacher-content">
+    <div class="pjbanner"></div>
+</div>
+
+<div class="recommend-content">
+    <div class="recommend-wrap">
+        <ul class="recommend-list">
+            <li class="clearfix">
+                <span class="recommend-avartar"><img width="150px" height="150px" src="__UPLOAD__/{$v.avatar}" alt=""></span>
+                <span class="teacher-info">
+						<span class="teacher-name">
+							{$v.name}
+						</span>
+						<span class="teacher-icon">
+							<span class="identity">身份认证</span>
+						<span class="education-background">学历认证</span>
+						</span>
+						<span class="edu-school">
+							<span class="university">{$v.college}</span>
+							<span class="profession">{$v.profess}</span>
+						</span>
+
+					</span>
+                <span class="task-info">
+							<span class="tasks">已完成{$v.tasknum}项任务</span>
+							<span class="students">已辅导{$v.studnum}位同学</span>
+							<span class="quality">辅导质量：{$v.levscor}分
+                            {if condition="$v.levscor > 4"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {elseif condition="$v.levscor > 3"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {elseif condition="$v.levscor > 2"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {elseif condition="$v.levscor > 1"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {else/}
+                                <i class="fa fa-star"></i>
+                            {/if}
+                            </span>
+                    <!--<span class="sort-teacher">排名所有老师 <span class="blue">前20%</span></span>-->
+							<span class="quality">守时评分：{$v.tiscor}分
+                                {if condition="$v.tiscor > 4"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {elseif condition="$v.tiscor > 3"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {elseif condition="$v.tiscor > 2"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {elseif condition="$v.tiscor > 1"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {else/}
+                                <i class="fa fa-star"></i>
+                            {/if}
+                           </span>
+                   </span>
+                <span class="edit-info">
+						<span class="edit">可修改<i class="big">{$v.modifynum}</i>次</span>
+						<span class="money">擅长领域：</span>
+						<span class="cour">{$v.course|cou}</span>
+					</span>
+            </li>
+        </ul>
+        <div class="pjpj">
+            <div class="pjti">请给老师评价</div>
+            <div class="pjxx">
+                <div>
+                <span class="xing">*</span><span>辅导质量：</span>
+                <ul id="xx1" class="xx">
+                    <li class="light"><a href="javascript:;">1</a></li>
+                    <li><a href="javascript:;">2</a></li>
+                    <li><a href="javascript:;">3</a></li>
+                    <li><a href="javascript:;">4</a></li>
+                    <li><a href="javascript:;">5</a></li>
+                </ul>
+                </div>
+                <div style="clear: both;">
+                <span class="xing">*</span><span>守时评价：</span>
+                <ul id="xx2" class="xx">
+                    <li class="light"><a href="javascript:;">1</a></li>
+                    <li><a href="javascript:;">2</a></li>
+                    <li><a href="javascript:;">3</a></li>
+                    <li><a href="javascript:;">4</a></li>
+                    <li><a href="javascript:;">5</a></li>
+                </ul>
+                </div>
+            </div>
+            <form action="{:url('appra')}" method="post" >
+                <div class="pj">
+                    <input type="hidden" id="levscor" name="levscor" value="1">
+                    <input type="hidden" name="timscor" id="timscor" value="1">
+                    <input type="hidden" name="id" value="{$id}">
+                    <input type="hidden" name="teid" value="{$teid}">
+                    <textarea name="pj" placeholder="写两句..."></textarea>
+                    <div style=" float: right;padding: 1% 0;"><input type="submit" class="pjbtn" value="确认"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    var num=finalnum = tempnum= 0;
+    var lis = $("#xx1 li");
+    //num:传入点亮星星的个数
+    //finalnum:最终点亮星星的个数
+    //tempnum:一个中间值
+    function fnShow(num) {
+        finalnum= num || tempnum;//如果传入的num为0，则finalnum取tempnum的值
+        for (var i = 0; i < lis.length; i++) {
+            lis[i].className = i < finalnum? "light" : "";//点亮星星就是加class为light的样式
+        }
+    }
+    for (var i = 1; i <= lis.length; i++) {
+        lis[i - 1].index = i;
+        lis[i - 1].onmouseover = function() { //鼠标经过点亮星星。
+            fnShow(this.index);//传入的值为正，就是finalnum
+        }
+        lis[i - 1].onmouseout = function() { //鼠标离开时星星变暗
+            fnShow(0);//传入值为0，finalnum为tempnum,初始为0
+        }
+        lis[i - 1].onclick = function() { //鼠标点击,同时会调用onmouseout,改变tempnum值点亮星星
+            tempnum= this.index;
+            //console.log(tempnum);
+            $("#levscor").val(tempnum);
+        }
+    }
+
+    var num2=finalnum2 = tempnum2= 0;
+    var lis2 = $("#xx2 li");
+    function fnShow2(num2) {
+        finalnum2= num2 || tempnum2;//如果传入的num为0，则finalnum取tempnum的值
+
+        for (var i = 0; i < lis2.length; i++) {
+            lis2[i].className = i < finalnum2? "light" : "";//点亮星星就是加class为light的样式
+        }
+    }
+    for (var i = 1; i <= lis2.length; i++) {
+        lis2[i - 1].index = i;
+        lis2[i - 1].onmouseover = function() { //鼠标经过点亮星星。
+            fnShow2(this.index);//传入的值为正，就是finalnum
+        }
+        lis2[i - 1].onmouseout = function() { //鼠标离开时星星变暗
+            fnShow2(0);//传入值为0，finalnum为tempnum,初始为0
+        }
+        lis2[i - 1].onclick = function() { //鼠标点击,同时会调用onmouseout,改变tempnum值点亮星星
+            tempnum2= this.index;
+            //console.log(tempnum2);
+            $("#timscor").val(tempnum2);
+        }
+    }
+</script>
+
+{include file="public/footer" /}

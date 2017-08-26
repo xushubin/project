@@ -1,0 +1,50 @@
+{include file="public/header" /}
+
+<div id="page-wrapper" class="create-order">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    任务管理 <small>抽检管理</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-tasks"></i> 抽检管理
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered task-table table-hover">
+                    <thead>
+                    <tr>
+                        <td>任务编号</td>
+                        <td>任务名称</td>
+                        <td>抽检状态</td>
+                        <td>当前ta</td>
+                        <td>抽检结果</td>
+                        <td>审核时间</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {foreach name="msg" item="p"}
+                    <tr>
+                        <td><a href="{:url('orexam','id='.$p['id'])}">{$p.orderid}</a></td>
+                        <td>{$p.tasktitle}</td>
+                        <td>{$p.check}</td>
+                        <td>{$p.ta}</td>
+                        <td>{$p.chresult}</td>
+                        <td>{$p.chectime}</td>
+                    </tr>
+                    {/foreach}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div><a href="?daochu=1"><button class="tabtn">导出</button></a></div>
+    </div>
+</div>

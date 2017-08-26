@@ -1,0 +1,127 @@
+{include file="public/header" /}
+
+<div class="acce">
+    <div class="acleft">
+        <div class="tasktit">
+            <div class="tittt"><span style="    position: relative;top: 37%;">{$teav.title}</span></div>
+        </div>
+
+        <div class="taskstu">
+            <div style="padding: 10% 15%"><img class="iimmgg" src="__UPLOAD__{$stud.avatar}"></div>
+            <div class="accmsg">{$stud.name}</div>
+            <div class="acus"><img src="/public/static/images/ss.png" style="    margin-right: 1%;">
+                <span class="stmsg">辅导科目：<span class="km">{$teav.course|cou}</span></span>
+            </div>
+            <div class="acus"><img src="/public/static/images/zz.png" style="    margin-right: 1%;">
+                    <span class="stmsg">其他资料：
+                        {foreach $teav.attafile as $i}
+                            <a href="__UPLOAD__{$i}">{$i}</a>  &nbsp;&nbsp;&nbsp;
+                        {/foreach}
+                    </span>
+            </div>
+            <div class="acctime"><img src="__PUBLIC__/images/443_20.png" style="margin-right: 3%;">截止时间：<span class="stbig">{$teav.deadtime}</span></div>
+        </div>
+    </div>
+
+    <div class="acright">
+        <div class="rwjd">任务进度</div>
+        <div class="acrim">
+            {eq name="flag" value="0"}
+            <div style="float: left;line-height: 30px;" ><img src="__PUBLIC__images/13434_07.png"></div>
+            <div class="stat1"><span style="font-style: italic">1.</span> 未上传</div>
+            {else /}
+                {foreach name="msg" item="vo" key="k" }
+                <div class="acdd">
+                    <div style="float: left;line-height: 30px;" ><img src="__PUBLIC__images/13434_07.png"></div>
+                    <div class="stat1"><span style="font-style: italic"> {$k} .</span> 第 {$k} 次上传（
+                        <a href="__UPLOAD__{$vo.file}">{$vo.file}</a>）
+                        <span style="float: right;    padding-right: 2%;">{$vo.time}</span>
+                    </div>
+                     {eq name="Think.session.class" value="1"}
+                    <div class="eddu"><a href="__UPLOAD__{$vo.file}"><button style="background: #40B5D8">下载</button></a>
+                        {neq name="vo.check" value="2"}
+                        <a href="{:url('satisfied','id='.$vo['id'].'&tid='.$vo['tid'])}"><button style="background: #F16558">满意</button></a>
+                        <a ><button onclick="show()" style="background: #D0D0D0">修改</button></a>
+                        {/neq}
+
+                    </div>
+                    {/eq}
+                    <div class="remdi">修改意见：{$vo.remark}</div>
+
+                </div>
+                {/foreach}
+            <div style="display: none" id="div">
+            <form action="{:url('edit')}" id="from" method="post">
+                <input name="remark" id="msg" type="text" class="acinp" placeholder="请输入修改意见"/>
+                <input name="id" value="{$vo.id}" type="hidden"/>
+                <input name="tid" value="{$vo.tid}" type="hidden"/>
+                <input type="button" class="acbtn1" onclick="return check()" style="background: #40B5D8" value="提交">
+            </form></div>
+            {/eq}
+        </div>
+        <script>
+            function show() {
+                $("#div").show();
+            }
+
+            function check() {
+                msg = $("#msg").val();
+                if(msg == ''){
+                    alert('请输入修改意见！');
+                    return false;
+                }else{
+                    $("#from").submit();
+                }
+            }
+
+
+        </script>
+        <div class="uplo">
+            <form action="{:url('process')}" id="form" method="post" enctype="multipart/form-data">
+            <span>上传新版本：</span>
+            <label for="file">
+                <input id="file" type="file" style="opacity: 0;width: 0"
+                       {eq name="Think.session.class" value="1"}disabled{/eq}{eq name="ts" value="1"} disabled {/eq} name="files" >
+                <a class="upfile1">选择文件</a></label>(超过2M的文件不能上传，只允许上传一个zip格式文件，请先压缩)
+
+                <input type="hidden" name="tid" value="{$teav.id}">
+                <input type="hidden" name="sid" value="{$teav.sid}">
+                <input type="hidden" name="teid" value="{$teav.teid}">
+                <input type="hidden" name="number" value="{$teav.number}">
+                <button type="button" id="acbtn" {eq name="Think.session.class" value="1"} disabled {/eq}
+                {eq name="ts" value="1"} disabled {/eq} class="acbtn">确认上传</button>
+            </form>
+            <div id="err"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#file").change(function(){
+        var file = $('#file').get(0).files;
+        for(i=0;i<file.length;i++){
+            size = file[i].size;
+            fileSize = (Math.round(size * 100 / 1024) / 100).toString();
+            if(fileSize > 2048){
+                $("#err").text('所选文件过大，超过两M的文件不能上传');
+                $("#acbtn").attr('disabled','disabled');
+            }else{
+                $("#err").text('');
+                $("#acbtn").removeAttr('disabled');
+            }
+        }
+
+    });
+
+$("#acbtn").click(function () {
+    val = $("#file").val();
+    msg = val.split('.');
+    if(msg['1'] == 'zip'){
+        $("#err").text();
+        $("#form").submit();
+    }else{
+        $("#err").text('请选择ZIP文件上传！');
+    }
+});
+</script>
+{include file="public/footer" /}

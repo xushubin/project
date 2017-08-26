@@ -1,0 +1,121 @@
+{include file="public/header" /}
+
+<div style="width: 1200px;margin: 0 auto">
+
+<div class="comm">
+
+</div>
+
+<div class="comw">
+    <div class="cotit"><span>{$tit}</span></div>
+    <div class="frxia">
+        {eq name="Think.session.class" value="2"}
+        <a href="{:url('plorder','id='.$id)}"><input type="submit" class="insub" value="确认下单"/> </a>
+        {/eq}
+    </div>
+</div>
+
+<div class="como">
+    <div class="team">
+        <div style="padding: 10% 15%"><img style="width: 200px;height: 200px;border-radius: 50%" src="__UPLOAD__/{$teav.avatar}"/></div>
+        <div style="text-align: center;width: 85%;margin: 0 auto;">
+            <div class="teana">{$teav.name}</div>
+            <div>
+                <div style="float: left;    width: 50%;">
+                    <img style="    padding-bottom: 5%;" src="__PUBLIC__/images/identity.png">身份认证
+                    <img src="__PUBLIC__/images/edu-bg.png">学历认证
+                </div>
+                <div  style="float: left;">
+                    <div class="coll">{$teav.college}</div>
+                    <div class="pro">{$teav.profess}</div>
+                </div>
+                <div style="clear: both;    padding-top: 5%;">
+                    <span class="tasks">已完成{$teav.tasknum}项任务</span>
+                    <span class="students">已辅导{$teav.studnum}位同学</span>
+
+                </div>
+            </div>
+        </div>
+        <div style="width: 85%;margin: 0 auto;padding-bottom: 1%;">
+            <span class="quality" style="display: block">辅导质量：{$teav.levscor}分
+                    {if condition="$teav.levscor > 4"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {elseif condition="$teav.levscor > 3"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {elseif condition="$teav.levscor > 2"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {elseif condition="$teav.levscor > 1"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {else/}
+                                <i class="fa fa-star"></i>
+                            {/if}
+                    </span>
+            <span class="quality">辅导质量：{$teav.tiscor}分
+                    {if condition="$teav.tiscor > 4"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {elseif condition="$teav.tiscor > 3"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {elseif condition="$teav.tiscor > 2"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {elseif condition="$teav.tiscor > 1"}
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            {else/}
+                                <i class="fa fa-star"></i>
+                            {/if}
+                    </span>
+            <div style="    padding-top: 2%;">
+                <div class="mode"><i class="mm">{$teav.modifynum}</i></div>
+                <div class="pric"><i class="mm1">{$teav.price}</i></div>
+            </div>
+        </div>
+    </div>
+    <div style="    float: left;padding-left: 4%;">
+        <iframe scrolling="0" width="800px" height="600px" src="{:url('talk/index','id='.$teid)}"></iframe>
+    </div>
+</div>
+
+<div class="guo">
+    <div style="padding: 2%">
+        <img src="__PUBLIC__/images/50_10.png">
+        过往订单与用户评价
+    </div>
+    <hr />
+    {eq name="fl" value="0"}
+    <div>暂无</div>
+    {else /}
+    <div style="padding:0 3% 3%;">
+        <ul class="ulu">
+            {foreach $msg as $v}
+            <li class="lili">
+                <div>{$v.name} 帮 {$v.sid|name}<span style="    color: #F58E73;"> {$v.title}</span>已结束</div>
+                <div style="    float: left;padding-top: 4%;    margin-right: 3%;"><img width="40px" height="40px" style="border-radius: 50%" src="__UPLOAD__/{$teav.avatar}"></div>
+                <div class="libj">{$v.pj|num}</div>
+            </li>
+            {/foreach}
+        </ul>
+    </div>
+    {/eq}
+</div>
+
+</div>
+{include file="public/footer" /}

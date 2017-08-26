@@ -1,0 +1,45 @@
+{include file="public/header" /}
+<div id="page-wrapper" class="user-management">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    任务管理 <small>任务列表</small>
+                </h1>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 bill-order">
+                <table class="table table-bordered ">
+                    <thead>
+                    <tr>
+                        <td>任务标题</td>
+                        <td>附属文件</td>
+                        <td>截止时间</td>
+                        <td>科目</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $msg as $v}
+                    <tr>
+                        <td>{$v.title}</td>
+                        <td>{$v.attafile}</td>
+                        <td>{$v.deadtime}</td>
+                        <td>{$v.course}</td>
+                    </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-12" style="text-align:center">
+                {$page}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{include file="public/footer" /}

@@ -1,0 +1,47 @@
+{include file="public/header" /}
+<div id="page-wrapper" class="user-management">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    任务管理 <small>任务日志</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-user"></i> 任务日志
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <ul id="myTabs" class="nav nav-tabs" role="tablist">
+            <li role="presentation" class=""><a href="{:url('ordetal','id='.$msg['id'])}" >任务详情</a></li>
+            <li role="presentation" class=""><a href="{:url('orexam','id='.$msg['id'])}" >审核状态</a></li>
+            <li role="presentation" class="active"><a href="{:url('orlog','id='.$msg['id'])}" >任务日志</a></li>
+        </ul>
+
+        <div class="row">
+            <div class="col-lg-12 bill-order" id="chai">
+                <table class="table table-bordered table-hover">
+
+                    <tr>
+                        <td>操作人</td>
+                        <td>操作类别</td>
+                        <td>备注信息</td>
+                        <td>操作时间</td>
+                    </tr>
+                    {foreach $log as $v}
+                    <tr>
+                        <td>{$v.uid}</td>
+                        <td>{$v.class}</td>
+                        <td>{$v.remark}</td>
+                        <td>{$v.logtime|date="Y-m-d H:i:s",###}</td>
+                    </tr>
+                    {/foreach}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="public/footer" /}

@@ -1,0 +1,81 @@
+{include file="public/header" /}
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <!-- 页面头部 -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            用户管理 <small>创建用户</small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li class="active">
+                                <i class="fa fa-user"></i> 用户管理
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-lg-offset-3">
+                        <form action="{:url('taskcreate/createOrder')}" method="post" id="createuser-form">
+                            <div class="form-group">
+                                <label for="taskid">选择任务类别</label>
+                                <select id="taskid" name="taskid" class="form-control">
+                                    <option value="">请选择</option>
+                                    <option value="5">会员充值</option>
+                                    <option value="2">paper</option>
+                                    <option value="4">homework</option>
+                                    <option value="3">exam</option>
+                                    <option value="1">整课</option>
+                                    <option value="5">监考</option>
+                                    <option value="5">书本</option>
+                                    <option value="5">补款</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">来源</label>
+                                <select id="name" name="name" class="form-control">
+                                    <option value="">请选择</option>
+                                    <option value="1">固有用户</option>
+                                    <option value="2">市场组</option>
+                                    <option value="3">QQ添加</option>
+                                    <option value="4">微信添加</option>
+                                    <option value="5">朋友介绍</option>
+                                </select>
+                            </div>
+                            <input type="hidden" name="wechatid" value="{$data.wechatid}">
+                            <input type="hidden" name="qqid" value="{$data.qqid}">
+                            <button type="submit" class="btn btn-default pull-right">确定</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+<script>
+$(function() {
+    $('#createuser-form').bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            taskid: {
+                validators: {
+                    notEmpty: {
+                        message: '任务类别不能为空'
+                    }
+                }
+            },
+            name: {
+                validators: {
+                    notEmpty: {
+                        message: '来源不能为空'
+                    }
+                }
+            }
+        }
+    });
+})
+</script>
+        {include file="public/footer" /}

@@ -1,0 +1,74 @@
+{include file="public/header" /}
+
+<div class="nig" style="margin-top:20px;">形式的新增修改</div>
+
+<div style="margin-top:20px;">
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>ID</th>
+            <th>形式名称</th>
+            <th>形式基数值</th>
+            <th>操作</th>
+        </tr>
+        {foreach $msg as $p}
+        <tr>
+            <td>{$p.id}</td>
+
+            <form action="/admin/shape/edit" method="post">
+                <td>
+                    <input type="text" id="name{$p.id}" class="form-control inp" name="name" value="{$p.name}" />
+                </td>
+                <td>
+                    <input type="text" id="key{$p.id}" class="form-control inp" name="key" value="{$p.key}" />
+                    <input type="hidden" name="id" value="{$p.id}"/>
+                </td>
+                <td>
+                    <button type="submit" onclick="return check({$p.id})" class="btn btn-primary" >修改</button>
+                    <a href="{:url('del',['id'=>$p.id])}"><button type="button" class="btn btn-danger" >删除</button></a>
+                </td>
+            </form>
+
+        </tr>
+        {/foreach}
+
+        <form action="/admin/shape/add" id="form"  method="post">
+            <tr>
+                <td></td>
+                <td> <input type="text" id="name" class="form-control inp" name="name"  placeholder="请输入形式名称" /></td>
+                <td> <input type="text" id="key" class="form-control inp" name="key"  placeholder="请输入形式基数值" /></td>
+                <td><button type="submit" onclick="return check(0)" class="btn btn-primary" >新增</button></td>
+            </tr>
+
+        </form>
+    </table>
+</div>
+<script>
+    function check(obj){
+        if(obj == 0){
+            if($("#name").val() == ''){
+                alert('请输入形式名称');
+                $("#name").focus()
+                return false;
+            }
+            if($("#key").val() == ''){
+                alert('请输入形式基数值');
+                $("#key").focus()
+                return false;
+            }
+        }else{
+            if($("#name"+obj).val() == ''){
+                alert('请输入形式名称');
+                $("#name"+obj).focus()
+                return false;
+            }
+            if($("#key"+obj).val() == 0){
+                alert('请输入形式基数值');
+                $("#key"+obj).focus()
+                return false;
+            }
+        }
+    }
+</script>
+</div>
+</body>
+</html>

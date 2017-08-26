@@ -1,0 +1,79 @@
+{include file="public/header" /}
+
+<div class="container-fluid">
+    <!-- 页面头部 -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                老师管理 <small>老师详情</small>
+            </h1>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 bill-order">
+            <table class="table table-bordered ">
+
+                <tr>
+                    <td width="15%;">用户名</td>
+                    <td>{$msg.name}</td>
+                <tr>
+
+                <tr>
+                    <td>邮箱</td>
+                    <td>{$msg.email}</td>
+                </tr>
+
+                <tr>
+                    <td>微信号</td>
+                    <td>{$msg.wechat}</td>
+                </tr>
+
+                <tr>
+                    <td>擅长科目/领域</td>
+                    <td>{$msg.course|cou}</td>
+                </tr>
+
+                {foreach $msg['tutotype'] as $k=>$v}
+                <tr>
+                    <td>辅导类型{$k}</td>
+                    <td>{$v['0']}</td>
+                </tr>
+
+                <tr>
+                    <td>价格{$k}</td>
+                    <td>{$v['1']}</td>
+                </tr>
+                {/foreach}
+
+                <tr>
+                    <td>可接受的修改次数</td>
+                    <td>{$msg.modifynum}</td>
+                </tr>
+
+                <tr>
+                    <td>收款账户</td>
+                    <td>{$msg.payaccout}</td>
+                </tr>
+
+                <tr>
+                    <td>身份证</td>
+                    <td><img width="400px" src="__UPLOAD__/{$msg.idcard}" /></td>
+                </tr>
+
+                <tr>
+                    <td>学位证或学生卡</td>
+                    <td><img width="400px" src="__UPLOAD__/{$msg.degree}" /></td>
+                </tr>
+
+                <tr>
+                    <td><a href="{:url('chang','ok=1&id='.$msg['id'])}" ><button style="float: right" type="button" class="btn btn-success">审核通过</button></a></td>
+                    <td><a href="{:url('chang','ok=2&id='.$msg['id'])}"><button type="button" class="btn btn-danger">审核不通过</button></a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
+{include file="public/footer" /}

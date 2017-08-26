@@ -1,0 +1,82 @@
+{include file="public/header" /}
+<div id="page-wrapper" class="admin">
+    <div class="container-fluid">
+        <!-- 页面头部 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    任务管理 <small>管理策略</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-user"></i> 管理策略
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered admin-table table-hover">
+                    <tr style="background: #C6E0B4">
+                        <td colspan="4">必检</td>
+                    </tr>
+                    <form action="{:url('editmana')}" method="post" id="form">
+                    <tr>
+                        <td>C类任务比重大于</td>
+                        <td width="25%"><div class="input-group"><input type="text" class="form-control" name="7" value="{$percentc}" id="percentc">
+                            <div class="input-group-addon">%</div></div></td>
+                        <td>非C类任务数量大于</td>
+                        <td><input type="text" class="form-control" id="num" name="8" value="{$num}"></td>
+                    </tr>
+                    <tr style="background: #C6E0B4">
+                        <td colspan="4">抽检</td>
+                    </tr>
+                    <tr>
+                        <td>本月抽检目标</td>
+                        <td colspan="3"><input type="text" class="form-control" id="sampl" name="9" value="{$sampl}"></td>
+                    </tr>
+                    <tr><td colspan="4">  &nbsp;&nbsp;  </td></tr>
+                    <tr style="background: #C6E0B4">
+                        <td colspan="4">绩效</td>
+                    </tr>
+                    <tr>
+                        <td>标准绩效点</td>
+                        <td colspan="3"><input type="text" class="form-control" id="standard" name="10" value="{$standard}"></td>
+                    </tr>
+                    <tr>
+                        <td>A级绩效点</td>
+                        <td><input type="text" class="form-control" id="alevel" name="11" value="{$alevel}"></td>
+                        <td>B级绩效点</td>
+                        <td><input type="text" class="form-control" id="blevel" name="12" value="{$blevel}"></td>
+                    </tr>
+                    <tr>
+                        <td>C级绩效点</td>
+                        <td><input type="text" class="form-control" id="clevel" name="13" value="{$clevel}"></td>
+                        <td>D级绩效点</td>
+                        <td><input type="text" class="form-control" id="dlevel" name="14" value="{$dlevel}"></td>
+                    </tr>
+                    <tr>
+                        <td>确认码</td>
+                        <td colspan="2"><input type="password" id="pass" class="form-control" name="pass" placeholder="请输入八位确认码"></td>
+                        <td><input type="button" id="mabtn" value="提交" class="tabtn"></td>
+                    </tr>
+                    </form>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+$("#mabtn").click(function () {
+    pass = $("#pass").val();
+    leng = pass.length;
+    if(leng != 8){
+        alert('请输入八位确认码');
+    }else{
+        $("#form").submit();
+    }
+});
+</script>
+
+{include file="public/footer" /}
